@@ -54,7 +54,7 @@ void	ft_putln(t_data *data, int x1, int y1, int x2, int y2, int color)
 	delta_x = delta_x / step;
 	delta_y = delta_y / step;
 	x = x1;
-	y = x2;
+	y = x1;
 	i = 0;
 	while (i < step)
 	{
@@ -75,8 +75,8 @@ int	main(void)
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello World!");
 	img.img = mlx_new_image(mlx, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	ft_putpxl(&img, WINDOW_HEIGHT/2, WINDOW_WIDTH/2, 0xFFFFFF);
-	ft_putln(&img, WINDOW_HEIGHT/2 + 20, WINDOW_WIDTH/2 + 20, (WINDOW_HEIGHT/2), (WINDOW_WIDTH/2), 0xFFFFFF);
+	ft_putpxl(&img, WINDOW_HEIGHT/2, WINDOW_WIDTH/2, 0xFFFFFFFF);
+	ft_putln(&img, WINDOW_HEIGHT/2 + 20, WINDOW_WIDTH/2 + 20, (WINDOW_HEIGHT/2), (WINDOW_WIDTH/2), 0xFFFFFFFF);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
