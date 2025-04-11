@@ -41,7 +41,7 @@ OBJ = $(SRC:.c=.o)
 
 # Create program
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(LDFLAGS) -o $(NAME)
 	@echo "\n${GREEN} Created ${NAME} ${DEF_COLOR}\n"
 
 $(LIBFT):
