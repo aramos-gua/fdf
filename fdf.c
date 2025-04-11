@@ -14,8 +14,8 @@
 #include <stdlib.h>
 #include "mlx_linux/mlx.h"
 #include "libft/libft.h"
-#define WINDOW_WIDTH 960
-#define WINDOW_HEIGHT 540
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 800
 
 typedef struct	s_data
 {
@@ -79,11 +79,11 @@ int	main(void)
 	//img.img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	//img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	//ft_putpxl(&img, WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 0xFFFFFFFF);
-	for (int y = 0;y < WINDOW_HEIGHT; ++y)
+	for (int y = WINDOW_HEIGHT * 0.1;y < WINDOW_HEIGHT * 0.9; ++y)
 	{
-		for (int x = 0; x < WINDOW_WIDTH; ++x)
+		for (int x = WINDOW_WIDTH * 0.1 ; x < WINDOW_WIDTH * 0.9; ++x)
 		{
-			mlx_pixel_put(mlx, mlx_win, x, y, 0xFFFFFFFF);
+			mlx_pixel_put(mlx, mlx_win, x, y, rand() % 0x1000000);
 		}
 	}
 	//mlx_string_put(mlx, mlx_win, WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 0xFFFFFFFF, "Hello, World!");
