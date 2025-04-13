@@ -29,6 +29,7 @@ LDFLAGS = -Lmlx_linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 
 # Directories of other dependencies
 LIBFTDIR = ./libft
+MLXDIR = ./mlx_linux
 
 # Target names
 NAME = fdf
@@ -41,15 +42,16 @@ OBJ = $(SRC:.c=.o)
 
 # Create program
 $(NAME): $(OBJ) $(LIBFT)
+	@make --no-print-directory -C $(MLXDIR)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(LDFLAGS) -o $(NAME)
 	@echo "\n${GREEN} Created ${NAME} ${DEF_COLOR}\n"
 
 $(LIBFT):
-	@make -C $(LIBFTDIR)
+	@make --no-print-directory -C $(LIBFTDIR)
 
 # Compile .c files into .o files
 %.o: %.c
-	@echo "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}"
+	@echo "\n${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}"
 	@$(CC) $(CFLAGS) -I/usr/include -Imlx -c $< -o $@
 
 # Build all
@@ -58,12 +60,13 @@ all: $(NAME)
 # Remove .o files
 clean:
 	@rm -f $(OBJ)
-	@make -C $(LIBFTDIR) clean
+	@make --no-print-directory -C $(LIBFTDIR) clean
 
 # Remove everything
 fclean: clean
 	@rm -f $(NAME)
-	@make -C $(LIBFTDIR) fclean
+	@make --no-print-directory -C $(LIBFTDIR) fclean
+	@make --no-print-directory -C $(MLXDIR) clean
 	@echo "${GREEN} Cleaned $(NAME) ${DEF_COLOR}"
 
 # Rebuild everything
