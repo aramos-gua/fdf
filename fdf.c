@@ -14,35 +14,46 @@
 #include <stdlib.h>
 #include "mlx_linux/mlx.h"
 #include "libft/libft.h"
+#include <stdio.h>
+#include <X11/keysym.h>
 #define WIDTH 500
 #define HEIGHT 500
 
+typedef struct	s_mlx_data
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+}	t_mlx_data;
+
+int	handle_input(int keysym, t_mlx_data *data)
+{
+	if (keysym == XK_Escape)
+	{
+		printf("The %d key was pressed\n\n", keysym);
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+		exit(1);
+	}
+	printf("The %d key was pressed\n\n", keysym);
+	return (0);
+}
+
 int	main(void)
 {
-	void	*mlx_connection;
-	void	*mlx_window;
-	void	*mlx_window2;
+	t_mlx_data	data;
 
-	mlx_connection = mlx_init();
-	if (!mlx_connection)
-		return (ft_printf("Error\n"), 1);
-	mlx_window = mlx_new_window(mlx_connection, HEIGHT, WIDTH, ":O");
-	if (!mlx_window)
+	data.mlx_ptr = mlx_init();
+	if (!data.mlx_ptr)
+		return (1);
+	data.win_ptr = mlx_new_window(data.mlx_ptr, WIDTH, HEIGHT, "Hello");
+	if (!data.mlx_ptr)
 	{
-		mlx_destroy_display(mlx_connection);
-		free(mlx_connection);
-		return (ft_printf("Error\n"), 1);
+		mlx_destroy_display(data.mlx_ptr);
+		free(data.mlx_ptr);
+		return (1);
 	}
-	mlx_window2 = mlx_new_window(mlx_connection, HEIGHT, WIDTH, "2nd Window");
-	if (!mlx_window2)
-	{
-		mlx_destroy_display(mlx_connection);
-		free(mlx_connection);
-		return (ft_printf("Error\n"), 1);
-	}
-	mlx_loop(mlx_connection);
-	mlx_destroy_window(mlx_connection, mlx_window);
-	mlx_destroy_display(mlx_connection);
-	free(mlx_connection);
+	mlx_key_hook(data.win_ptr, handle_input, &data);
+	mlx_loop(data.mlx_ptr);
 	return (0);
 }
