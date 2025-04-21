@@ -35,7 +35,7 @@ int	handle_input(int keysym, t_mlx_data *data)
 		free(data->mlx_ptr);
 		exit(1);
 	}
-	printf("The %d key was pressed\n\n", keysym);
+	printf("The %d key was pressed\n", keysym);
 	return (0);
 }
 
