@@ -62,21 +62,26 @@ void ft_draw_line(t_data *data, int color)
 	int	dx;
 	int	dy;
 	int	y;
-	int	m;
 	int	i;
 	int	p;
 
+	i = 0;
 	dx = data->x1 - data->x0;
 	dy = data->y1 - data->y0;
 	if (dx != 0)
 	{
-		m = dy / dx;
 		y = data->y0;
-		for (i = 0; i <= dx + 1; i++)
-			ft_put_pixel(data, data->x0 + i, data->y0, color);
-		p = 2 * dy / dx * (i + 1) + 2 * data->y0 - 2 * y - 1 ;
-		if (p >= 0)
-			y += m;
+		p = 2 * dy - dx;
+		while (i++ <= dx + 1)
+		{
+			ft_put_pixel(data, data->x0 + i, y, color);
+			if (p >= 0)
+			{
+				y += 1;
+				p -= (2 * dx);
+			}
+			p += (2 * dy);
+		}
 	}
 }
 
