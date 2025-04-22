@@ -1,8 +1,9 @@
-# Color def
+# Text styles
 DEL_LINE =		\033[2K
-ITALIC =		\033[3m
 BOLD =			\033[1m
 DEF_COLOR =		\033[0;39m
+
+# Basic bright colors
 GRAY =			\033[0;90m
 RED =			\033[0;91m
 GREEN =			\033[0;92m
@@ -10,6 +11,8 @@ YELLOW =		\033[0;93m
 BLUE =			\033[0;94m
 MAGENTA =		\033[0;95m
 CYAN =			\033[0;96m
+
+# Other colors
 WHITE =			\033[0;97m
 BLACK =			\033[0;99m
 ORANGE =		\033[38;5;209m
@@ -75,9 +78,12 @@ SRC = \
 	ft_printf/ft_printf_d_i.c\
 	ft_printf/ft_printf_x_p.c\
 	get_next_line/get_next_line.c\
-	get_next_line/get_next_line_utils.c
+	get_next_line/get_next_line_utils.c\
+	get_next_line_arrays/get_next_line_bonus.c\
+	get_next_line_arrays/get_next_line_utils_bonus.c
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
+OBJ_DIR = build
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -fPIC
 NAME = libft.a
@@ -85,19 +91,22 @@ NAME = libft.a
 # Compile libft
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
-	@rm *.o
-	@echo "\n${GREEN} Created ${NAME} ${DEF_COLOR}\n"
+	@echo "\n${GREEN} Created $(NAME) ${DEF_COLOR}\n"
 
-%.o: %.c
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	@echo "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$<${DEF_COLOR}"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # Targets
 all: $(NAME)
 
 clean:
-	@rm -f $(OBJ)
+	@rm -rf $(OBJ_DIR)
+	@echo "${GREEN} Cleaned $(OBJ_DIR) directory ${DEF_COLOR}"
 
 fclean: clean
 	@rm -f $(NAME)
+	@echo "${GREEN} Cleaned $(NAME) library ${DEF_COLOR}"
 
 re: fclean all
