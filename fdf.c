@@ -19,7 +19,7 @@
 #define WIDTH 500
 #define HEIGHT 500
 
-typedef struct	s_mlx_data
+typedef struct s_mlx_data
 {
 	void	*mlx_ptr;//connection pointer
 	void	*win_ptr;//window pointer
@@ -29,11 +29,26 @@ typedef struct	s_mlx_data
 	int		line_length;//number of bytes per row
 	int		endian;//how color bytes are stored
 	//coordinates
-	int	y0;
-	int	y1;
-	int	x0;
-	int	x1;
+	int		y0;
+	int		y1;
+	int		x0;
+	int		x1;
+	//map storage
+	int		**z_matrix;
+	int		width;
+	int		height;
+	//extra
+	int		zoom;
+	int		offset_x;
+	int		offset_y;
 }	t_data;
+
+typedef struct pointer
+{
+	int	x;	
+	int	y;	
+	int	z;	
+}	t_point;
 
 int	handle_input(int keysym, t_data *data)
 {
@@ -54,10 +69,10 @@ void	ft_put_pixel(t_data *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
-void ft_draw_line(t_data *data, int color)
+void	ft_draw_line(t_data *data, int color)
 {
 	int	dx;
 	int	dy;
