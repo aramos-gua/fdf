@@ -21,13 +21,18 @@
 
 typedef struct	s_mlx_data
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+	void	*mlx_ptr;//connection pointer
+	void	*win_ptr;//window pointer
+	void	*img;//image pointer(canvas final product)
+	char	*addr;//memory that gets changed to build the image
+	int		bits_per_pixel;//how many bits per pixel for the image(usually 32 for RGBA)
+	int		line_length;//number of bytes per row
+	int		endian;//how color bytes are stored
+	//coordinates
+	int	y0;
+	int	y1;
+	int	x0;
+	int	x1;
 }	t_data;
 
 int	handle_input(int keysym, t_data *data)
@@ -52,27 +57,27 @@ void	ft_put_pixel(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void ft_draw_line(t_data *data, int x0, int y0, int x1, int y1, int color)
+void ft_draw_line(t_data *data, int color)
 {
-    int dx = abs(x1 - x0);
-    int dy = abs(y1 - y0);
-    int sx = (x0 < x1) ? 1 : -1;
-    int sy = (y0 < y1) ? 1 : -1;
-    int err = dx - dy;
+	int	dx;
+	int	dy;
+	int	y;
+	int	m;
+	int	i;
+	int	p;
 
-    while (x0 != x1 || y0 != y1)
-    {
-        ft_put_pixel(data, x0, y0, color);
-        int e2 = 2 * err;
-        if (e2 > -dy) {
-            err -= dy;
-            x0 += sx;
-        }
-        if (e2 < dx) {
-            err += dx;
-            y0 += sy;
-        }
-    }
+	dx = data->x1 - data->x0;
+	dy = data->y1 - data->y0;
+	if (dx != 0)
+	{
+		m = dy / dx;
+		y = data->y0;
+		for (i = 0; i <= dx + 1; i++)
+			ft_put_pixel(data, data->x0 + i, data->y0, color);
+		p = 2 * dy / dx * (i + 1) + 2 * data->y0 - 2 * y - 1 ;
+		if (p >= 0)
+			y += m;
+	}
 }
 
 int	main(void)
@@ -91,7 +96,11 @@ int	main(void)
 	}
 	data.img = mlx_new_image(data.mlx_ptr, WIDTH, HEIGHT);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length, &data.endian);
-	ft_draw_line(&data, 50, 50, 100, 50, 0xFFFFFFFF);
+	data.x0 = 50;
+	data.x1 = 150;
+	data.y0 = 50;
+	data.y1 = 150;
+	ft_draw_line(&data, 0xFFFFFFFF);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img, 0, 0);
 	mlx_key_hook(data.win_ptr, handle_input, &data);
 	mlx_loop(data.mlx_ptr);
