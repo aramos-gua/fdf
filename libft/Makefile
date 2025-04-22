@@ -103,7 +103,6 @@ all: $(NAME)
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@echo "${GREEN} Cleaned $(OBJ_DIR) directory ${DEF_COLOR}"
 
 fclean: clean
 	@rm -f $(NAME)
