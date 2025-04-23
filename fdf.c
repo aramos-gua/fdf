@@ -6,50 +6,11 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:42:40 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/13 23:10:40 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/23 17:00:19 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_linux/mlx.h"
-#include "libft/libft.h"
-#include <X11/keysym.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <math.h>
-#define HEIGHT 500
-#define WIDTH 500
-
-typedef struct s_mlx_data
-{
-	void	*mlx_ptr;//connection pointer
-	void	*win_ptr;//window pointer
-	void	*img;//image pointer(canvas final product)
-	char	*addr;//memory that gets changed to build the image
-	int		bits_per_pixel;//how many bits per pixel for the image(usually 32 for RGBA)
-	int		line_length;//number of bytes per row
-	int		endian;//how color bytes are stored
-	//coordinates
-	int		y0;
-	int		y1;
-	int		x0;
-	int		x1;
-	//map storage
-	int		**z_matrix;
-	int		width;
-	int		height;
-	//extra
-	int		zoom;
-	int		offset_x;
-	int		offset_y;
-}	t_data;
-
-typedef struct pointer
-{
-	int	x;	
-	int	y;	
-	int	z;	
-}	t_point;
+#include "fdf.h"
 
 int	handle_input(int keysym, t_data *data)
 {
@@ -123,7 +84,7 @@ void	ft_draw_line(t_data *data, int color)
 				y -= 1;
 			if (p >= 0)
 			{
-				if (dx >0)
+				if (dx > 0)
 					x += 1;
 				else
 					x -= 1;
@@ -144,7 +105,7 @@ static int	count_width(char *line)
 	i = 0;
 	count = 0;
 	split = ft_split(line, ' ');
-	while(split[count])
+	while (split[count])
 		count++;
 	while (split[i])
 		free(split[i++]);
@@ -158,7 +119,7 @@ static void	fill_z_matrix_row(int *row, char *line)
 	int		i;
 
 	i = 0;
-	split =ft_split(line, ' ');
+	split = ft_split(line, ' ');
 	while (split[i])
 	{
 		row[i] = ft_atoi(split[i]);
@@ -223,16 +184,16 @@ void	draw_grid(t_data *data, int color)
 				data->y0 = y * zoom;
 				data->x1 = (x + 1) * zoom;
 				data->y1 = y * zoom;
-				ft_draw_line(data, color);
 			}
+			ft_draw_line(data, color);
 			if (y < data->height - 1)
 			{
 				data->x0 = x * zoom;
 				data->y0 = y * zoom;
 				data->x1 = x * zoom;
 				data->y1 = (y + 1) * zoom;
-				ft_draw_line(data, color);
 			}
+			ft_draw_line(data, color);
 			x++;
 		}
 		y++;
@@ -259,7 +220,7 @@ int	main(int argc, char **argv)
 	data.img = mlx_new_image(data.mlx_ptr, WIDTH, HEIGHT);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length, &data.endian);
 	draw_grid(&data, 0xFFFFFFFF);
-	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img, 0, 0);
+	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img, WIDTH * 0.15, HEIGHT * 0.15);
 	mlx_key_hook(data.win_ptr, handle_input, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
