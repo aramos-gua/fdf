@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/23 14:36:12 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/23 17:26:44 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <math.h>
-#define HEIGHT 500
-#define WIDTH 500
+#define HEIGHT 600
+#define WIDTH 600
 
 typedef struct s_mlx_data
 {

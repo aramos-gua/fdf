@@ -24,7 +24,7 @@ DARK_YELLOW =	\033[38;5;143m
 
 #Compiler information
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -MMD -MP
 LDFLAGS = -Lmlx_linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 
 # Directories of other dependencies
@@ -59,7 +59,7 @@ all: $(NAME)
 
 # Remove .o files
 clean:
-	@rm -f $(OBJ)
+	@rm -f $(OBJ) $(OBJ:.o=.d)
 	@make --no-print-directory -C $(LIBFTDIR) clean
 
 # Remove everything
@@ -73,3 +73,5 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+-include $(OBJ:.o=.d)
