@@ -77,6 +77,7 @@ void	ft_draw_line(t_data *data, int color)
 {
 	int	dx;
 	int	dy;
+	int	x;
 	int	y;
 	int	i;
 	int	p;
@@ -84,19 +85,54 @@ void	ft_draw_line(t_data *data, int color)
 	i = 0;
 	dx = data->x1 - data->x0;
 	dy = data->y1 - data->y0;
-	if (dx != 0)
+	x = data->x0;
+	y = data->y0;
+	if (abs(dx) > abs(dy))
 	{
-		y = data->y0;
-		p = 2 * dy - dx;
-		while (i++ <= dx + 1)
+		if (dx == 0)
+			return ;
+		p = 2 * abs(dy) - abs(dx);
+		while (i++ <= abs(dx))
 		{
-			ft_put_pixel(data, data->x0 + i, y, color);
+			ft_put_pixel(data, x, y, color);
+			if (dx > 0)
+				x += 1;
+			else
+				x -= 1;
 			if (p >= 0)
 			{
-				y += 1;
-				p -= (2 * dx);
+				if (dy > 0)
+					y += 1;
+				else
+					y -= 1;
+				p -= 2 * abs(dx);
 			}
 			p += (2 * dy);
+			i++;
+		}
+	}
+	else
+	{
+		if (dy == 0)
+			return ;
+		p = 2 * abs(dx) - abs(dy);
+		while (i <= abs(dy))
+		{
+			ft_put_pixel(data, x, y, color);
+			if (dy > 0)
+				y += 1;
+			else
+				y -= 1;
+			if (p >= 0)
+			{
+				if (dx >0)
+					x += 1;
+				else
+					x -= 1;
+				p -= 2 * abs(dy);
+			}
+			p += 2 * abs(dx);
+			i++;
 		}
 	}
 }
@@ -170,6 +206,41 @@ void	read_map(char *file, t_data *data)
 	close(fd);
 }
 
+void	draw_grid(t_data *data, int color)
+{
+	int	x;
+	int	y;
+	int	zoom;
+
+	y = 0;
+	zoom = 20;
+	while (y < data->height)
+	{
+		x = 0;
+		while (x < data->width)
+		{
+			if (x < data->width - 1)
+			{
+				data->x0 = x * zoom;
+				data->y0 = y * zoom;
+				data->x1 = (x + 1) * zoom;
+				data->y1 = y * zoom;
+				ft_draw_line(data, color);
+			}
+			if (y < data->height - 1)
+			{
+				data->x0 = x * zoom;
+				data->y0 = y * zoom;
+				data->x1 = x * zoom;
+				data->y1 = (y + 1) * zoom;
+				ft_draw_line(data, color);
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -189,11 +260,7 @@ int	main(int argc, char **argv)
 	}
 	data.img = mlx_new_image(data.mlx_ptr, WIDTH, HEIGHT);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length, &data.endian);
-	data.x0 = 50;
-	data.x1 = 150;
-	data.y0 = 50;
-	data.y1 = 150;
-	ft_draw_line(&data, 0xFFFFFFFF);
+	draw_grid(&data, 0xFFFFFFFF);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img, 0, 0);
 	mlx_key_hook(data.win_ptr, handle_input, &data);
 	mlx_loop(data.mlx_ptr);
