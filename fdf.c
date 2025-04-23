@@ -89,10 +89,8 @@ void	ft_draw_line(t_data *data, int color)
 	y = data->y0;
 	if (abs(dx) > abs(dy))
 	{
-		if (dx == 0)
-			return ;
 		p = 2 * abs(dy) - abs(dx);
-		while (i++ <= abs(dx))
+		while (i <= abs(dx))
 		{
 			ft_put_pixel(data, x, y, color);
 			if (dx > 0)
