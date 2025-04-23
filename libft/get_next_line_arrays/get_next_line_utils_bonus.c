@@ -12,7 +12,7 @@
 
 #include "get_next_line_bonus.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*gnl_strchr(const char *s, int c)
 {
 	while (*s)
 	{
@@ -25,13 +25,13 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*gnl_substr(char const *s, unsigned int start, size_t len)
 {
 	char		*ptr;
 	char		*start_ptr;
 	char const	*new_s;
 
-	if (!s || start > ft_strlen(s, '\0'))
+	if (!s || start > gnl_strlen(s, '\0'))
 	{
 		ptr = (char *)malloc(1);
 		if (!ptr)
@@ -39,8 +39,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		*ptr = '\0';
 		return (ptr);
 	}
-	if (len > (ft_strlen(s, '\0') - start))
-		len = (ft_strlen(s, '\0') - start);
+	if (len > (gnl_strlen(s, '\0') - start))
+		len = (gnl_strlen(s, '\0') - start);
 	ptr = (char *)malloc(len + 1);
 	if (!ptr)
 		return (NULL);
@@ -52,7 +52,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (start_ptr);
 }
 
-size_t	ft_strlen(const char *str, char c)
+size_t	gnl_strlen(const char *str, char c)
 {
 	size_t	i;
 
@@ -98,10 +98,10 @@ char	*gnl_strjoin(char *s1, char *s2)
 	char	*s3;
 
 	if (s1)
-		len1 = ft_strlen(s1, '\0');
+		len1 = gnl_strlen(s1, '\0');
 	else
 		len1 = 0;
-	len2 = ft_strlen(s2, '\0');
+	len2 = gnl_strlen(s2, '\0');
 	s3 = malloc(len1 + len2 + 1);
 	if (!s3)
 		return (NULL);

@@ -19,20 +19,16 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdint.h>
+# include "../libft.h"
 
-typedef struct s_list
+typedef struct gnl_s_list
 {
 	char			buffer[BUFFER_SIZE + 1];
-	struct s_list	*next;
+	struct gnl_s_list	*next;
 	int				fd;
-}	t_list;
+}	gnl_list;
 
 char	*get_next_line(int fd);
-char	*ft_strchr(const char *s, int c);
-void	*ft_calloc(size_t nmemb, size_t size);
-void	*ft_fclean(t_list *current);
-void	ft_putstr(char *str);
-int		ft_final_len(t_list *lst);
-int		ft_strlen(char *str);
-t_list	*find_fd(t_list **current, int fd);
+void	*ll_fclean(gnl_list *current);
+int		ft_final_len(gnl_list *lst);
 #endif

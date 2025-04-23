@@ -19,12 +19,12 @@ void	divide(char	*buffer, char **line_to_return)
 	size_t	line_len;
 	size_t	leftover_len;
 
-	line_ptr = ft_strchr(buffer, '\n');
+	line_ptr = gnl_strchr(buffer, '\n');
 	if (!line_ptr)
 		return ;
-	line_len = ft_strlen(buffer, '\n') + 1;
-	leftover_len = ft_strlen(buffer, '\0') - line_len;
-	temp = ft_substr(buffer, 0, line_len);
+	line_len = gnl_strlen(buffer, '\n') + 1;
+	leftover_len = gnl_strlen(buffer, '\0') - line_len;
+	temp = gnl_substr(buffer, 0, line_len);
 	if (!temp)
 		return ;
 	if (*line_to_return)
@@ -48,9 +48,9 @@ char	*get_next_line_bonus(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line_to_return = NULL;
-	if (ft_strlen(buffer[fd], '\0') > 0 && ft_strchr(buffer[fd], '\n'))
+	if (gnl_strlen(buffer[fd], '\0') > 0 && gnl_strchr(buffer[fd], '\n'))
 		return (divide(buffer[fd], &line_to_return), line_to_return);
-	else if (ft_strlen(buffer[fd], '\0') > 0 && !ft_strchr(buffer[fd], '\n'))
+	else if (gnl_strlen(buffer[fd], '\0') > 0 && !gnl_strchr(buffer[fd], '\n'))
 		line_to_return = gnl_strjoin(line_to_return, buffer[fd]);
 	while (1)
 	{
@@ -58,7 +58,7 @@ char	*get_next_line_bonus(int fd)
 		if (bytes <= 0)
 			break ;
 		buffer[fd][bytes] = '\0';
-		if (ft_strchr(buffer[fd], '\n'))
+		if (gnl_strchr(buffer[fd], '\n'))
 			return (divide(buffer[fd], &line_to_return), line_to_return);
 		line_to_return = gnl_strjoin(line_to_return, buffer[fd]);
 	}

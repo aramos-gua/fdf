@@ -10,14 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include <stdlib.h>
 #include "mlx_linux/mlx.h"
 #include "libft/libft.h"
-#include <stdio.h>
 #include <X11/keysym.h>
-#define WIDTH 500
+#include <stdlib.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <math.h>
 #define HEIGHT 500
+#define WIDTH 500
 
 typedef struct s_mlx_data
 {
@@ -100,10 +101,82 @@ void	ft_draw_line(t_data *data, int color)
 	}
 }
 
-int	main(void)
+static int	count_width(char *line)
+{
+	int		i;
+	char	**split;
+	int		count;
+
+	i = 0;
+	count = 0;
+	split = ft_split(line, ' ');
+	while(split[count])
+		count++;
+	while (split[i])
+		free(split[i++]);
+	free(split);
+	return (count);
+}
+
+static void	fill_z_matrix_row(int *row, char *line)
+{
+	char	**split;
+	int		i;
+
+	i = 0;
+	split =ft_split(line, ' ');
+	while (split[i])
+	{
+		row[i] = ft_atoi(split[i]);
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}
+
+void	read_map(char *file, t_data *data)
+{
+	int		i;
+	int		y;
+	int		fd;
+	char	*line;
+
+	y = 0;
+	i = 0;
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		exit(EXIT_FAILURE);
+	data->height = 0;
+	while ((line = get_next_line(fd)))
+	{
+		if (data->height == 0)
+			data->width = count_width(line);
+		free(line);
+		data->height++;
+	}
+	close(fd);
+	data->z_matrix = malloc(sizeof(int *) * data->height);
+	if (!data->z_matrix)
+		return ;
+	while (i < data->height)
+		data->z_matrix[i++] = malloc (sizeof(int) * data->width);
+	fd = open(file, O_RDONLY);
+	while ((line = get_next_line(fd)))
+	{
+		fill_z_matrix_row(data->z_matrix[y], line);
+		free(line);
+		y++;
+	}
+	close(fd);
+}
+
+int	main(int argc, char **argv)
 {
 	t_data	data;
 
+	if (argc != 2)
+		return (ft_printf("Usage ./fdf map_name.fdf\n"), 1);
+	read_map(argv[1], &data);
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (1);

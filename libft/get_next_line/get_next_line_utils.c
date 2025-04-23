@@ -12,24 +12,9 @@
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
+void	*ll_fclean(gnl_list *start)
 {
-	if (s == NULL || c < 0)
-		return (NULL);
-	while (*s != '\0')
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if (*s == '\0' && c == '\0')
-		return ((char *)s);
-	return (NULL);
-}
-
-void	*ft_fclean(t_list *start)
-{
-	t_list	*temp;
+	gnl_list	*temp;
 
 	while (start)
 	{
@@ -41,7 +26,7 @@ void	*ft_fclean(t_list *start)
 	return (NULL);
 }
 
-int	ft_final_len(t_list *lst)
+int	ft_final_len(gnl_list *lst)
 {
 	int	size;
 
@@ -52,14 +37,4 @@ int	ft_final_len(t_list *lst)
 		lst = lst -> next;
 	}
 	return (size);
-}
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
 }
