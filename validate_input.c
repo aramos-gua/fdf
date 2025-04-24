@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:51:56 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/24 16:02:50 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/24 16:13:32 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,3 +41,5 @@ void	map_info(t_data *data, char *line)
 	free(line);
 	close(data->fd);
 }
+
+
