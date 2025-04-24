@@ -22,13 +22,31 @@
 
 typedef struct s_mlx_data
 {
-	void	*mlx_ptr;//connection pointer
-	void	*win_ptr;//window pointer
+	//info for MiniLibX
+	void	*mlx;//connection pointer
+	void	*win;//window pointer
 	void	*img;//image pointer(canvas final product)
 	char	*addr;//memory that gets changed to build the image
-	int		bits_per_pixel;//how many bits per pixel for the image(usually 32 for RGBA)
+	int		bpp;//bits-per-pixel(usually 32 for RGBA)
 	int		line_length;//number of bytes per row
 	int		endian;//how color bytes are stored
+	//map info
+	char	*map_path;//map file
+	int		**final_tab;//2D array w/values
+	int		map_w;//width/columns
+	int		map_h;//height/rows
+	//position tracking
+	int		x;//coordenates
+	int		y;//coordenates
+	int		z;//coordenates
+	int		c_x;//current values
+	int		c_y;//current values
+	//settings for map
+	int		scale;//size of squares in grid
+	int		translation;//scroll-info
+	float	altitude;//change in z
+	float	zoom;//zoom value
+	float	alpha;//rotation angle
 	//coordinates
 	int		y0;
 	int		y1;
@@ -39,7 +57,6 @@ typedef struct s_mlx_data
 	int		width;
 	int		height;
 	//extra
-	int		zoom;
 	int		offset_x;
 	int		offset_y;
 }	t_data;

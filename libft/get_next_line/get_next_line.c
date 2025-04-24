@@ -1,126 +1,68 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Alejandro Ramos <alejandro.ramos.gua@gmai  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/22 10:20:50 by Alejandro Ram     #+#    #+#             */
-/*   Updated: 2025/02/22 10:20:54 by Alejandro Ram    ###   ########.fr       */
+/*   Created: 2025/04/14 18:32:26 by Alejandro Ram     #+#    #+#             */
+/*   Updated: 2025/04/15 22:49:24 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_create_node(gnl_list **current, gnl_list **start)
+void	divide(char	*buffer, char **line_to_return)
 {
-	gnl_list	*new_node;
+	char	*line_ptr;
+	char	*temp;
+	size_t	line_len;
+	size_t	leftover_len;
 
-	new_node = malloc(sizeof(gnl_list));
-	if (!new_node)
-	{
-		ll_fclean(*start);
-		return (0);
-	}
-	new_node -> next = NULL;
-	new_node -> buffer[0] = '\0';
-	if (*current == NULL)
-		*start = new_node;
+	line_ptr = gnl_strchr(buffer, '\n');
+	if (!line_ptr)
+		return ;
+	line_len = gnl_strlen(buffer, '\n') + 1;
+	leftover_len = gnl_strlen(buffer, '\0') - line_len;
+	temp = gnl_substr(buffer, 0, line_len);
+	if (!temp)
+		return ;
+	if (*line_to_return)
+		*line_to_return = gnl_strjoin(*line_to_return, temp);
 	else
-		(*current)-> next = new_node;
-	*current = new_node;
-	return (1);
-}
-
-gnl_list	*divorce(gnl_list *current, char *new_line_index)
-{
-	gnl_list	*brand_new;
-	int		i;
-
-	if (!current || !new_line_index)
-		return (NULL);
-	brand_new = malloc(sizeof(gnl_list));
-	if (!brand_new)
-		return (NULL);
-	brand_new -> next = NULL;
-	i = 0;
-	new_line_index++;
-	while (new_line_index[i] != '\0')
 	{
-		(brand_new -> buffer)[i] = new_line_index[i];
-		if (i == 0)
-			new_line_index[i] = '\0';
-		i++;
+		*line_to_return = temp;
+		temp = NULL;
 	}
-	brand_new -> buffer[i] = '\0';
-	return (brand_new);
-}
-
-char	*join_delete(gnl_list	*start)
-{
-	char	*final_string;
-	gnl_list	*to_delete;
-	int		i;
-	int		j;
-	int		str_len;
-
-	to_delete = start;
-	str_len = ft_final_len(start);
-	if (str_len <= 0)
-		return (ll_fclean(to_delete));
-	final_string = (char *)malloc(str_len + 1 * sizeof(char));
-	if (!final_string)
-		return (ll_fclean(to_delete));
-	start = to_delete;
-	i = 0;
-	while (start != NULL && i < str_len)
-	{
-		j = 0;
-		while ((start->buffer)[j] != '\0')
-			final_string[i++] = (start)->buffer[j++];
-		start = start->next;
-	}
-	final_string[i] = '\0';
-	ll_fclean(to_delete);
-	return (final_string);
-}
-
-static void	initiate_continue(char **new_line_index,
-				gnl_list **start, gnl_list *current, ssize_t *copied)
-{
-	*new_line_index = NULL;
-	*start = NULL;
-	*copied = 1;
-	if (current != NULL)
-	{
-		*start = current;
-		*new_line_index = ft_strchr(current -> buffer, '\n');
-	}
+	free(temp);
+	ft_memmove(buffer, line_ptr + 1, leftover_len);
+	buffer[leftover_len] = '\0';
 }
 
 char	*get_next_line(int fd)
 {
-	static gnl_list	*current[1024];
-	gnl_list			*start;
-	char			*new_line_index;
-	ssize_t			copied;
+	static char	buffer[1024][BUFFER_SIZE + 1];
+	char		*line_to_return;
+	int			bytes;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	initiate_continue(&new_line_index, &start, current[fd], &copied);
-	while (copied > 0 && new_line_index == NULL)
+	line_to_return = NULL;
+	if (gnl_strlen(buffer[fd], '\0') > 0 && gnl_strchr(buffer[fd], '\n'))
+		return (divide(buffer[fd], &line_to_return), line_to_return);
+	else if (gnl_strlen(buffer[fd], '\0') > 0 && !gnl_strchr(buffer[fd], '\n'))
+		line_to_return = gnl_strjoin(line_to_return, buffer[fd]);
+	while (1)
 	{
-		if (ft_create_node(&current[fd], &start) == 0)
-			return (NULL);
-		copied = read(fd, current[fd]-> buffer, BUFFER_SIZE);
-		if (copied < 0)
-		{
-			current[fd] = NULL;
-			return (ll_fclean(start));
-		}
-		(current[fd]-> buffer)[copied] = '\0';
-		new_line_index = ft_strchr(current[fd]-> buffer, '\n');
+		bytes = read(fd, buffer[fd], BUFFER_SIZE);
+		if (bytes <= 0)
+			break ;
+		buffer[fd][bytes] = '\0';
+		if (gnl_strchr(buffer[fd], '\n'))
+			return (divide(buffer[fd], &line_to_return), line_to_return);
+		line_to_return = gnl_strjoin(line_to_return, buffer[fd]);
 	}
-	current[fd] = divorce(current[fd], new_line_index);
-	return (join_delete(start));
+	if (!line_to_return || line_to_return[0] == '\0')
+		return (free(line_to_return), NULL);
+	return (line_to_return);
 }

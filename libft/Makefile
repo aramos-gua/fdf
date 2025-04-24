@@ -78,9 +78,7 @@ SRC = \
 	ft_printf/ft_printf_d_i.c\
 	ft_printf/ft_printf_x_p.c\
 	get_next_line/get_next_line.c\
-	get_next_line/get_next_line_utils.c\
-	get_next_line_arrays/get_next_line_bonus.c\
-	get_next_line_arrays/get_next_line_utils_bonus.c
+	get_next_line/get_next_line_utils.c
 
 OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 OBJ_DIR = build
