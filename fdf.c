@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:42:40 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/23 17:00:19 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/24 14:13:12 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ int	main(int argc, char **argv)
 	data.altitude = 1;
 	data.translation = 1;
 	data.map_path = argv[1];
-	map_info(&data, data.map_path);
+	validate_input(&data, data.map_path);
 	return (0);
 }
 	//read_map(argv[1], &data);

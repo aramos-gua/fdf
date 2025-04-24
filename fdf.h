@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/23 17:26:44 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/24 14:13:42 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_mlx_data
 	int		line_length;//number of bytes per row
 	int		endian;//how color bytes are stored
 	//map info
+	int		fd;//fd of file
 	char	*map_path;//map file
 	int		**final_tab;//2D array w/values
 	int		map_w;//width/columns
@@ -67,3 +68,8 @@ typedef struct pointer
 	int	y;	
 	int	z;	
 }	t_point;
+
+//Parse input
+void	found_error(char *message);
+void	validate_input(t_data *data, char *filename);
+void	map_info(t_data *data);

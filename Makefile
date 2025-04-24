@@ -36,7 +36,8 @@ NAME = fdf
 LIBFT = $(LIBFTDIR)/libft.a
 
 # Files
-SRC = ./fdf.c
+SRC = ./fdf.c\
+	  ./validate_input.c
 
 OBJ = $(SRC:.c=.o)
 
