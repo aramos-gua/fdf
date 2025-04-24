@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static size_t	word_c(char const *s, char c)
+size_t	word_c(char const *s, char c)
 {
 	size_t	words;
 

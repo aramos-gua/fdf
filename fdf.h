@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/24 14:13:42 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/24 16:00:54 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,4 @@ typedef struct pointer
 //Parse input
 void	found_error(char *message);
 void	validate_input(t_data *data, char *filename);
-void	map_info(t_data *data);
+void	map_info(t_data *data, char *line);
