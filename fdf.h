@@ -36,6 +36,7 @@ typedef struct s_mlx_data
 	int		**final_tab;//2D array w/values
 	int		map_w;//width/columns
 	int		map_h;//height/rows
+	int		*row_lengths;//array of row widths
 	//position tracking
 	int		x;//coordenates
 	int		y;//coordenates

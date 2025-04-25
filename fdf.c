@@ -212,7 +212,7 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc != 2)
-		found_error("Usage ./fdf map_name.fdf");
+		found_error("Error: Usage ./fdf map_name.fdf");
 	data.y = 0;
 	data.map_h = 0;
 	data.map_w = 0;
