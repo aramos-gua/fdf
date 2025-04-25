@@ -14,11 +14,11 @@
 
 void	validate_input(t_data *data, char *filename)
 {
-	int		filename_len;
+	int		filen;
 	char	*line;
 
-	filename_len = ft_strlen(filename);
-	if (!ft_strnstr(data->map_path, ".fdf", filename_len))
+	filen = ft_strlen(filename);
+	if (filen < 4 || ft_strncmp(&filename[filen - 4], ".fdf", 4) != 0)
 		found_error("Error: Wrong File Format");
 	data->fd = open(filename, O_RDONLY);
 	if (data->fd < 0)
@@ -27,7 +27,7 @@ void	validate_input(t_data *data, char *filename)
 	if (!line)
 		found_error("Error: Empty or Non-Existent File");
 	if (map_info(data, line) < 0)
-		found_error("Error: Wrong File Content");
+		found_error("Error: Wrong Map Format");
 }
 
 int	map_info(t_data *data, char *line)

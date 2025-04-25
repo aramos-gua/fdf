@@ -206,6 +206,17 @@ void	found_error(char *message)
 	exit (1);
 }
 
+void	fdf_init(t_data *data, char **argv)
+{
+	data->y = 0;
+	data->map_h = 0;
+	data->map_w = 0;
+	data->scale = 30;
+	data->alpha = 7.37;
+	data->altitude = 1;
+	data->translation = 1;
+	data->map_path = argv[1];
+}
 
 int	main(int argc, char **argv)
 {
@@ -213,14 +224,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		found_error("Error: Usage ./fdf map_name.fdf");
-	data.y = 0;
-	data.map_h = 0;
-	data.map_w = 0;
-	data.scale = 30;
-	data.alpha = 7.37;
-	data.altitude = 1;
-	data.translation = 1;
-	data.map_path = argv[1];
+	fdf_init(&data, argv);
 	validate_input(&data, data.map_path);
 	return (0);
 }
@@ -236,8 +240,10 @@ int	main(int argc, char **argv)
 	//	return (1);
 	//}
 	//data.img = mlx_new_image(data.mlx_ptr, WIDTH, HEIGHT);
-	//data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length, &data.endian);
+	//data.addr = mlx_get_data_addr(data.img, 
+//&data.bits_per_pixel, &data.line_length, &data.endian);
 	//draw_grid(&data, 0xFFFFFFFF);
-	//mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img, WIDTH * 0.15, HEIGHT * 0.15);
+	//mlx_put_image_to_window(data.mlx_ptr, 
+//data.win_ptr, data.img, WIDTH * 0.15, HEIGHT * 0.15);
 	//mlx_key_hook(data.win_ptr, handle_input, &data);
 	//mlx_loop(data.mlx_ptr);
