@@ -26,38 +26,21 @@ void	validate_input(t_data *data, char *filename)
 	line = get_next_line(data->fd);
 	if (!line)
 		found_error("Error: Empty or Non-Existent File");
-	map_info(data, line);
+	if (map_info(data, line) < 0)
+		found_error("Error: Wrong File Content");
 }
 
-void	map_info(t_data *data, char *line)
+int	map_info(t_data *data, char *line)
 {
-	char	*c_line;
-	int		i;
-
-	i = 0;
+	data->map_w = word_c(line, ' ');
 	while (line)
 	{
+		if ((int)word_c(line, ' ') != data->map_w)
+			return (free(line), -1);
 		data->map_h++;
 		free(line);
 		line = get_next_line(data->fd);
 	}
-	//free(line);
 	close(data->fd);
-	data->row_lengths = ft_calloc(sizeof(int), data->map_h);
-	if (!data->row_lengths)
-		found_error("Error: Could Not Allocate for row_lengths");
-	data->fd = open(data->map_path, O_RDONLY);
-	if (data->fd < 0)
-		found_error("Error: Reopen File Error");
-	while (i < data->map_h)
-	{
-		c_line = get_next_line(data->fd);
-		if (!c_line)
-			found_error("Error: Unexpected EOF");
-		data->row_lengths[i] = word_c(c_line, ' ');
-		ft_printf("row[%d]: chars: %d %s -> \n", i, data->row_lengths[i], c_line);
-		free(c_line);
-		i++;
-	}
-	close(data->fd);
+	return (0);
 }

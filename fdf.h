@@ -73,4 +73,4 @@ typedef struct pointer
 //Parse input
 void	found_error(char *message);
 void	validate_input(t_data *data, char *filename);
-void	map_info(t_data *data, char *line);
+int		map_info(t_data *data, char *line);
