@@ -44,3 +44,8 @@ int	map_info(t_data *data, char *line)
 	close(data->fd);
 	return (0);
 }
+
+void	map_parsing(t_data *data)
+{
+	data->fd = open(data->map_path, O_RDONLY);
+}
