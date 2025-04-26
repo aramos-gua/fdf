@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:51:56 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/24 16:13:32 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/26 23:07:20 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,8 @@ void	vertices(t_data *data)
 		}
 		data->y++;
 	}
-	free_3d_table(data);
+	i = 0;
+	while (i < data->map_h)
+		free(data->final_tab[i++]);
+	free(data->final_tab);
 }

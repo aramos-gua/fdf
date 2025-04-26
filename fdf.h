@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/24 16:13:34 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/26 21:37:52 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 #include <math.h>
 #define HEIGHT 600
 #define WIDTH 600
+
+typedef struct	s_vertx
+{
+	int	x;	
+	int	y;	
+	int	z;	
+}	t_vertx;
 
 typedef struct s_mlx_data
 {
@@ -65,12 +72,6 @@ typedef struct s_mlx_data
 	//int		offset_y;
 }	t_data;
 
-typedef struct	s_vertx
-{
-	int	x;	
-	int	y;	
-	int	z;	
-}	t_vertx;
 
 
 //Parse input
@@ -78,3 +79,4 @@ void	found_error(char *message);
 void	validate_input(t_data *data, char *filename);
 int		map_info(t_data *data, char *line);
 void	map_parsing(t_data *data);
+void	vertices(t_data *data);

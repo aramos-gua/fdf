@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:42:40 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/24 16:13:35 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/26 23:07:21 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ void	found_error(char *message)
 	exit (1);
 }
 
-void	fdf_init(t_data *data, char **argv)
+void	data_init(t_data *data, char **argv)
 {
 	data->y = 0;
 	data->x = 0;
@@ -219,15 +219,26 @@ void	fdf_init(t_data *data, char **argv)
 	data->map_path = argv[1];
 }
 
+int	win_init(t_data *data)
+{
+	data->mlx = mlx_init();
+	if (!data->mlx)
+		return (free(data->mlx), 1);
+	data->win_ptr = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Fil de Fer");
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
 
 	if (argc != 2)
 		found_error("Error: Usage ./fdf map_name.fdf");
-	fdf_init(&data, argv);
+	data_init(&data, argv);
 	validate_input(&data, data.map_path);
 	map_parsing(&data);
+	vertices(&data);
+	win_init(t_data *data);
+	free(data.s_points);
 	return (0);
 }
 	//read_map(argv[1], &data);
