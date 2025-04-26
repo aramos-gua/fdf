@@ -47,5 +47,29 @@ int	map_info(t_data *data, char *line)
 
 void	map_parsing(t_data *data)
 {
+	char	*line;
+	char	**num;
+
 	data->fd = open(data->map_path, O_RDONLY);
+	data->final_tab = malloc(data->map_h * sizeof(int *));
+	if (!data->final_tab)
+		found_error("Error: Memory Allocation Failed");
+	while (data->y < data->map_h)
+	{
+		data->final_tab[data->y] = malloc(data->map_w * sizeof(int));
+		if (!data->final_tab[data->y])
+			found_error("Error: Memory Allocation Failed");
+		line = get_next_line(data->fd);
+		num = ft_split(line, ' ');
+		free(line);
+		while (data->x < data->map_w)
+		{
+			data->final_tab[data->y][data->x] = ft_atoi(num[data->x]);
+			ft_printf("number stored in data[%d][%d] is %d\n", data->y, data->x, num[data->x]);
+			free(num[data->x]);
+			(data->x)++;
+		}
+		data->y++;
+		free(num);
+	}
 }

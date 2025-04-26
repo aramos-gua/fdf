@@ -209,6 +209,7 @@ void	found_error(char *message)
 void	fdf_init(t_data *data, char **argv)
 {
 	data->y = 0;
+	data->x = 0;
 	data->map_h = 0;
 	data->map_w = 0;
 	data->scale = 30;
@@ -226,6 +227,7 @@ int	main(int argc, char **argv)
 		found_error("Error: Usage ./fdf map_name.fdf");
 	fdf_init(&data, argv);
 	validate_input(&data, data.map_path);
+	map_parsing(&data);
 	return (0);
 }
 	//read_map(argv[1], &data);
