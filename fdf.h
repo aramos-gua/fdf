@@ -40,7 +40,7 @@ typedef struct s_mlx_data
 	//position tracking
 	int		x;//coordenates
 	int		y;//coordenates
-	int		z;//coordenates
+	int		i;//coordenates
 	int		c_x;//current values
 	int		c_y;//current values
 	//settings for map
@@ -49,26 +49,29 @@ typedef struct s_mlx_data
 	float	altitude;//change in z
 	float	zoom;//zoom value
 	float	alpha;//rotation angle
+	//3D vertices
+	t_vertx	*s_points;
 	//coordinates
-	int		y0;
-	int		y1;
-	int		x0;
-	int		x1;
+	//int		y0;
+	//int		y1;
+	//int		x0;
+	//int		x1;
 	//map storage
-	int		**z_matrix;
-	int		width;
-	int		height;
+	//int		**z_matrix;
+	//int		width;
+	//int		height;
 	//extra
-	int		offset_x;
-	int		offset_y;
+	//int		offset_x;
+	//int		offset_y;
 }	t_data;
 
-typedef struct pointer
+typedef struct	s_vertx
 {
 	int	x;	
 	int	y;	
 	int	z;	
-}	t_point;
+}	t_vertx;
+
 
 //Parse input
 void	found_error(char *message);

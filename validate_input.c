@@ -53,12 +53,12 @@ void	map_parsing(t_data *data)
 	data->fd = open(data->map_path, O_RDONLY);
 	data->final_tab = malloc(data->map_h * sizeof(int *));
 	if (!data->final_tab)
-		found_error("Error: Memory Allocation Failed");
+		found_error("Error/ftab: Memory Allocation Failed");
 	while (data->y < data->map_h)
 	{
 		data->final_tab[data->y] = malloc(data->map_w * sizeof(int));
 		if (!data->final_tab[data->y])
-			found_error("Error: Memory Allocation Failed");
+			found_error("Error/ftabs: Memory Allocation Failed");
 		line = get_next_line(data->fd);
 		num = ft_split(line, ' ');
 		free(line);
@@ -66,11 +66,34 @@ void	map_parsing(t_data *data)
 		while (data->x < data->map_w)
 		{
 			data->final_tab[data->y][data->x] = ft_atoi(num[data->x]);
-			ft_printf("number stored in data[%d][%d] is %d\n", data->y, data->x, data->final_tab[data->y][data->x]);
 			free(num[data->x]);
 			(data->x)++;
 		}
 		data->y++;
 		free(num);
 	}
+}
+
+void	vertices(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->s_points = malloc (data->map_w * data->map_h * sizeof(t_vertx));
+	if (!data->s_points)
+		found_error("Error/vrtc: Memory Allocation Failed");
+	data->y = 0;
+	while (data->y < data->map_h)
+	{
+		data->x = 0;
+		while (data->x < data->map_w)
+		{
+			data->s_points[i] = (t_vertx){data->x, data->y,
+				data->final_tab[data->y][data->x]};
+			i++;
+			data->x++;
+		}
+		data->y++;
+	}
+	free_3d_table(data);
 }
