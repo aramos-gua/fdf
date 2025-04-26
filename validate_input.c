@@ -62,10 +62,11 @@ void	map_parsing(t_data *data)
 		line = get_next_line(data->fd);
 		num = ft_split(line, ' ');
 		free(line);
+		data->x = 0;
 		while (data->x < data->map_w)
 		{
 			data->final_tab[data->y][data->x] = ft_atoi(num[data->x]);
-			ft_printf("number stored in data[%d][%d] is %d\n", data->y, data->x, num[data->x]);
+			ft_printf("number stored in data[%d][%d] is %d\n", data->y, data->x, data->final_tab[data->y][data->x]);
 			free(num[data->x]);
 			(data->x)++;
 		}
