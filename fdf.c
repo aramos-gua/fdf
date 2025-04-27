@@ -227,6 +227,9 @@ int	win_init(t_data *data)
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Fil de Fer");
 	if (!data->win)
 		return (-1);
+	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	data->addr = mlx_get_data_addr(data->img, &data->bpp,
+			&data->line_length, &data->endian);
 	return (0);
 }
 
