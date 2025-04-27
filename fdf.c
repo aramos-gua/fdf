@@ -223,8 +223,11 @@ int	win_init(t_data *data)
 {
 	data->mlx = mlx_init();
 	if (!data->mlx)
-		return (free(data->mlx), 1);
-	data->win_ptr = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Fil de Fer");
+		return (free(data->mlx), -1);
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Fil de Fer");
+	if (!data->win)
+		return (-1);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -237,7 +240,7 @@ int	main(int argc, char **argv)
 	validate_input(&data, data.map_path);
 	map_parsing(&data);
 	vertices(&data);
-	win_init(t_data *data);
+	win_init(&data);
 	free(data.s_points);
 	return (0);
 }
