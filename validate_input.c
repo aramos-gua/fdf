@@ -79,8 +79,8 @@ void	vertices(t_data *data)
 	int	i;
 
 	i = 0;
-	data->s_points = malloc (data->map_w * data->map_h * sizeof(t_vertx));
-	if (!data->s_points)
+	data->vertices = malloc (data->map_w * data->map_h * sizeof(t_vertx));
+	if (!data->vertices)
 		found_error("Error/vrtc: Memory Allocation Failed");
 	data->y = 0;
 	while (data->y < data->map_h)
@@ -88,7 +88,7 @@ void	vertices(t_data *data)
 		data->x = 0;
 		while (data->x < data->map_w)
 		{
-			data->s_points[i] = (t_vertx){data->x, data->y,
+			data->vertices[i] = (t_vertx){data->x, data->y,
 				data->final_tab[data->y][data->x]};
 			i++;
 			data->x++;
@@ -100,3 +100,28 @@ void	vertices(t_data *data)
 		free(data->final_tab[i++]);
 	free(data->final_tab);
 }
+
+void	ver_corn(t_data *data)
+{
+	int		i;
+	float	x;
+	float	y;
+	float	z;
+
+	i = 0;
+	data->corners = malloc(data->map_h * data->map_w * sizeof(t_corners));
+	if (!data->corners)
+		found_error("Error/vercn: Memory Allocation Failed");
+	while (i < (data->map_h * data->map_w))
+	{
+		x = data->vertices[i].x;
+		y = data->vertices[i].y;
+		z = data->vertices[i].z * data->altitude;
+		data->corners[i].x = (x - y) * cosf(data->alpha);
+		data->corners[i].y = (x + y) * sinf(data->alpha) - z;
+		data->corners[i].x *= data->scale;
+		data->corners[i].y *= data->scale;
+		i++;
+	}
+}
+

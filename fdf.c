@@ -230,6 +230,8 @@ int	win_init(t_data *data)
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bpp,
 			&data->line_length, &data->endian);
+	mlx_loop_hook(data->mlx, render, data);
+	mlx_loop(data->mlx);
 	return (0);
 }
 
@@ -244,7 +246,8 @@ int	main(int argc, char **argv)
 	map_parsing(&data);
 	vertices(&data);
 	win_init(&data);
-	free(data.s_points);
+	free(data.vertices);
+	free(data.corners);
 	return (0);
 }
 	//read_map(argv[1], &data);
