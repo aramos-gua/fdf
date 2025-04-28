@@ -87,3 +87,4 @@ void	validate_input(t_data *data, char *filename);
 int		map_info(t_data *data, char *line);
 void	map_parsing(t_data *data);
 void	vertices(t_data *data);
+void	ver_corn(t_data *data);

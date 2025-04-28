@@ -230,6 +230,7 @@ int	win_init(t_data *data)
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bpp,
 			&data->line_length, &data->endian);
+	ver_corn(data);
 	mlx_loop_hook(data->mlx, render, data);
 	mlx_loop(data->mlx);
 	return (0);
