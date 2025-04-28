@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:51:56 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/26 23:07:20 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/28 21:35:19 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	validate_input(t_data *data, char *filename)
 	if (data->fd < 0)
 		found_error("Error: File Error");
 	line = get_next_line(data->fd);
-	if (!line)
+	if (!line || line[0] == '\0')
 		found_error("Error: Empty or Non-Existent File");
 	if (map_info(data, line) < 0)
 		found_error("Error: Wrong Map Format");

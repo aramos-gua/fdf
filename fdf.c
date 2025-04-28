@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:42:40 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/28 21:16:17 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/28 21:39:28 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,28 +64,23 @@ void ft_draw_line(t_data *data, int color)
 
 void	grid_maker(t_data *data)
 {
-	data->row = 1;
+	data->row = 0;
 	data->i = 0;
 
 	while (data->row < data->map_h)
 	{
-		data->col = 1;
+		data->col = 0;
 		while (data->col < data->map_w)
 		{
-			draw_right(data);//maybe will be able to do int flags here
-			draw_down(data);
+			if (data->col < data->map_w - 1)
+				draw_right(data);
+			if (data->row < data->map_h - 1)
+				draw_down(data);
+			data->i++;
+			data->col++;
 		}
-		if (data->col == data->map_w)
-			draw_down(data);
 		data->row++;
 	}
-	data->col = 1;
-	if (data->row == data->map_h)
-	{
-		while (data->col < data->map_w)
-			draw_right(data);
-	}
-	free(data->corners);
 }
 
 void	found_error(char *message)
@@ -111,7 +106,7 @@ int	win_init(t_data *data)
 {
 	data->mlx = mlx_init();
 	if (!data->mlx)
-		return (free(data->mlx), -1);
+		return (-1);
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Fil de Fer");
 	if (!data->win)
 		return (-1);
@@ -120,7 +115,7 @@ int	win_init(t_data *data)
 			&data->line_length, &data->endian);
 	ver_corn(data);
 	grid_maker(data);
-	//mlx_loop_hook(data->mlx, render, data);
+	mlx_loop_hook(data->mlx, ft_loop, data);
 	mlx_loop(data->mlx);
 	return (0);
 }

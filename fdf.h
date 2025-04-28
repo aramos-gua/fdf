@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/28 21:20:50 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/28 21:42:00 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int		map_info(t_data *data, char *line);
 void	map_parsing(t_data *data);
 void	vertices(t_data *data);
 void	ver_corn(t_data *data);
+void	grid_maker(t_data *data);
 void	draw_right(t_data *data);
 void	draw_down(t_data *data);
 void	ft_draw_line(t_data *data, int color);
+int		ft_loop(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 20:56:54 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/28 21:23:08 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/28 21:41:02 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,26 @@
 
 void	draw_right(t_data *data)
 {
-	float	x0;
-	float	y0;
-	float	x1;
-	float	y1;
-
-	x0 = data->corners[data->i].x;
-	y0 = data->corners[data->i].y;
-	x1 = data->corners[data->i + 1].x;
-	y1 = data->corners[data->i + 1].y;
-	data->col++;
-	ft_draw_line(data, 0xFFFFFFFF;
+	data->x0 = (int)data->corners[data->i].x;
+	data->y0 = (int)data->corners[data->i].y;
+	data->x1 = (int)data->corners[data->i + 1].x;
+	data->y1 = (int)data->corners[data->i + 1].y;
+	ft_draw_line(data, 0xFFFFFFFF);
 }
 
 void	draw_down(t_data *data)
 {
-	float	x0;
-	float	y0;
-	float	x1;
-	float	y1;
+	data->x0 = (int)data->corners[data->i].x;
+	data->y0 = (int)data->corners[data->i].y;
+	data->x1 = (int)data->corners[data->i + data->map_w].x;
+	data->y1 = (int)data->corners[data->i + data->map_w].y;
+	ft_draw_line(data, 0xFFFFFFFF);
+}
 
-	x0 = data->corners[data->i].x;
-	y0 = data->corners[data->i].y;
-	x1 = data->corners[data->i + data->map_w].x;
-	y1 = data->corners[data->i + data->map_w].y;
-	ft_draw_line(data, 0xFFFFFFFF;
+int	ft_loop(t_data *data)
+{
+	ver_corn(data);
+	grid_maker(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	return (0);
 }
