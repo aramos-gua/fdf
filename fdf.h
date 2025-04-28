@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/26 21:37:52 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/28 21:20:50 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ typedef struct s_mlx_data
 	int			bpp;//bits-per-pixel(usually 32 for RGBA)
 	int			line_length;//number of bytes per row
 	int			endian;//how color bytes are stored
+	//line information
+	int			x0;
+	int			y0;
+	int			x1;
+	int			y1;
 	//map info
 	int			fd;//fd of file
 	char		*map_path;//map file
@@ -53,9 +58,9 @@ typedef struct s_mlx_data
 	//position tracking
 	int			x;//coordenates
 	int			y;//coordenates
-	int			i;//coordenates
-	int			c_x;//current values
-	int			c_y;//current values
+	int			i;//var to iterate
+	int			col;//current column in 2D
+	int			row;//current row in 2D
 	//settings for map
 	int			scale;//size of squares in grid
 	int			translation;//scroll-info
@@ -65,18 +70,6 @@ typedef struct s_mlx_data
 	//3D build-up
 	t_vertx		*vertices;//vertices
 	t_corners	*corners;//vertices converted to 2D
-	//coordinates
-	//int		y0;
-	//int		y1;
-	//int		x0;
-	//int		x1;
-	//map storage
-	//int		**z_matrix;
-	//int		width;
-	//int		height;
-	//extra
-	//int		offset_x;
-	//int		offset_y;
 }	t_data;
 
 
@@ -88,3 +81,6 @@ int		map_info(t_data *data, char *line);
 void	map_parsing(t_data *data);
 void	vertices(t_data *data);
 void	ver_corn(t_data *data);
+void	draw_right(t_data *data);
+void	draw_down(t_data *data);
+void	ft_draw_line(t_data *data, int color);
