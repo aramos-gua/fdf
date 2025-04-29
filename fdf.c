@@ -30,12 +30,15 @@ void	ft_put_pixel(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
+	if ( x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT)
+		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bpp / 8));
 	*(unsigned int *)dst = color;
 }
 
 void ft_draw_line(t_data *data, int color)
 {
+	ft_printf("ft_draw_line\n");
 	int dx = abs(data->x1 - data->x0);
 	int dy = -abs(data->y1 - data->y0);
 	int sx = (data->x0 < data->x1) ? 1 : -1;
@@ -64,9 +67,11 @@ void ft_draw_line(t_data *data, int color)
 
 void	grid_maker(t_data *data)
 {
+	ft_printf("grid_maker\n");
 	data->row = 0;
 	data->i = 0;
 
+	ft_printf("data->map_h = %d\n data->map_w = %d\n", data->map_h, data->map_w);
 	while (data->row < data->map_h)
 	{
 		data->col = 0;
@@ -76,7 +81,9 @@ void	grid_maker(t_data *data)
 				draw_right(data);
 			if (data->row < data->map_h - 1)
 				draw_down(data);
+			ft_printf("data->i = %d\n", data->i);
 			data->i++;
+			ft_printf("data->col = %d\n", data->col);
 			data->col++;
 		}
 		data->row++;
@@ -91,6 +98,7 @@ void	found_error(char *message)
 
 void	data_init(t_data *data, char **argv)
 {
+	ft_printf("data_init\n");
 	data->y = 0;
 	data->x = 0;
 	data->map_h = 0;
@@ -104,6 +112,7 @@ void	data_init(t_data *data, char **argv)
 
 int	win_init(t_data *data)
 {
+	ft_printf("win_init\n");
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		return (-1);

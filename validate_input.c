@@ -14,6 +14,7 @@
 
 void	validate_input(t_data *data, char *filename)
 {
+	ft_printf("validate_input\n");
 	int		filen;
 	char	*line;
 
@@ -32,6 +33,7 @@ void	validate_input(t_data *data, char *filename)
 
 int	map_info(t_data *data, char *line)
 {
+	ft_printf("map_info\n");
 	data->map_w = word_c(line, ' ');
 	while (line)
 	{
@@ -47,6 +49,7 @@ int	map_info(t_data *data, char *line)
 
 void	map_parsing(t_data *data)
 {
+	ft_printf("map_parsing\n");
 	char	*line;
 	char	**num;
 
@@ -76,6 +79,7 @@ void	map_parsing(t_data *data)
 
 void	vertices(t_data *data)
 {
+	ft_printf("vertices\n");
 	int	i;
 
 	i = 0;
@@ -103,6 +107,7 @@ void	vertices(t_data *data)
 
 void	ver_corn(t_data *data)
 {
+	ft_printf("ver_corn\n");
 	int		i;
 	float	x;
 	float	y;
