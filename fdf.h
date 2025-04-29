@@ -48,6 +48,8 @@ typedef struct s_mlx_data
 	int			y0;
 	int			x1;
 	int			y1;
+	int			dx;
+	int			dy;
 	//map info
 	int			fd;//fd of file
 	char		*map_path;//map file
