@@ -14,7 +14,7 @@
 
 void	draw_right(t_data *data)
 {
-	if ((data->i + 1) >= data->map_w)
+	if ((data->i + 1) % data->map_w == 0)
 		return	;
 	ft_printf("draw_right\n");
 	data->x0 = (int)data->corners[data->i].x;
@@ -38,8 +38,6 @@ void	draw_down(t_data *data)
 
 int	ft_loop(t_data *data)
 {
-	ver_corn(data);
-	grid_maker(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (0);
 }

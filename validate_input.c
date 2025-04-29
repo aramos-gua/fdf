@@ -112,6 +112,8 @@ void	ver_corn(t_data *data)
 	float	x;
 	float	y;
 	float	z;
+	float	center_x = (data->map_w -1) / 2.0;
+	float	center_y = (data->map_h -1) / 2.0;
 
 	i = 0;
 	data->corners = malloc(data->map_h * data->map_w * sizeof(t_corners));
@@ -119,13 +121,13 @@ void	ver_corn(t_data *data)
 		found_error("Error/vercn: Memory Allocation Failed");
 	while (i < (data->map_h * data->map_w))
 	{
-		x = data->vertices[i].x;
-		y = data->vertices[i].y;
+		x = data->vertices[i].x - center_x;
+		y = data->vertices[i].y - center_y;
 		z = data->vertices[i].z * data->altitude;
-		data->corners[i].x = (x - y) * cosf(data->alpha);
-		data->corners[i].y = (x + y) * sinf(data->alpha) - z;
-		data->corners[i].x *= data->scale;
-		data->corners[i].y *= data->scale;
+		data->corners[i].x = ((x - y) * cosf(data->alpha)) * data->scale + WIDTH / 2;
+		data->corners[i].y = ((x + y) * sinf(data->alpha) - z) * data->scale + HEIGHT / 2;
+//		data->corners[i].x *= data->scale;
+//		data->corners[i].y *= data->scale;
 		i++;
 	}
 }

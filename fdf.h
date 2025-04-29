@@ -17,8 +17,8 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <math.h>
-#define HEIGHT 600
-#define WIDTH 600
+#define HEIGHT 1800
+#define WIDTH 1920
 
 typedef struct	s_vertx
 {
@@ -86,3 +86,4 @@ void	draw_right(t_data *data);
 void	draw_down(t_data *data);
 void	ft_draw_line(t_data *data, int color);
 int		ft_loop(t_data *data);
+int	handle_input(int keysym, t_data *data);

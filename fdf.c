@@ -22,6 +22,18 @@ int	handle_input(int keysym, t_data *data)
 		free(data->mlx);
 		exit(1);
 	}
+	else if (keysym == XK_Down || keysym == XK_Up)
+	{
+		if (keysym == XK_Down)
+			data->scale -= 5;
+		else
+			data->scale += 5;
+		data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+		data->addr = mlx_get_data_addr(data->img, &data->bpp, &data->line_length, &data->endian);
+		ver_corn(data);
+		grid_maker(data);
+		mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	}
 	printf("The %d key was pressed\n", keysym);
 	return (0);
 }
@@ -38,32 +50,65 @@ void	ft_put_pixel(t_data *data, int x, int y, int color)
 
 void ft_draw_line(t_data *data, int color)
 {
-	ft_printf("ft_draw_line\n");
-	int dx = abs(data->x1 - data->x0);
-	int dy = -abs(data->y1 - data->y0);
-	int sx = (data->x0 < data->x1) ? 1 : -1;
-	int sy = (data->y0 < data->y1) ? 1 : -1;
+	int x0 = data->x0;
+	int y0 = data->y0;
+	int x1 = data->x1;
+	int y1 = data->y1;
+
+	int dx = abs(x1 - x0);
+	int dy = -abs(y1 - y0);
+	int sx = (x0 < x1) ? 1 : -1;
+	int sy = (y0 < y1) ? 1 : -1;
 	int err = dx + dy;
 	int e2;
 
 	while (1)
 	{
-		ft_put_pixel(data, data->x0, data->y0, color);
-		if (data->x0 == data->x1 && data->y0 == data->y1)
+		ft_put_pixel(data, x0, y0, color);
+		if (x0 == x1 && y0 == y1)
 			break;
 		e2 = 2 * err;
 		if (e2 >= dy)
 		{
 			err += dy;
-			data->x0 += sx;
+			x0 += sx;
 		}
 		if (e2 <= dx)
 		{
 			err += dx;
-			data->y0 += sy;
+			y0 += sy;
 		}
 	}
 }
+//
+//void ft_draw_line(t_data *data, int color)
+//{
+//	ft_printf("ft_draw_line\n");
+//	int dx = abs(data->x1 - data->x0);
+//	int dy = -abs(data->y1 - data->y0);
+//	int sx = (data->x0 < data->x1) ? 1 : -1;
+//	int sy = (data->y0 < data->y1) ? 1 : -1;
+//	int err = dx + dy;
+//	int e2;
+//
+//	while (1)
+//	{
+//		ft_put_pixel(data, data->x0, data->y0, color);
+//		if (data->x0 == data->x1 && data->y0 == data->y1)
+//			break;
+//		e2 = 2 * err;
+//		if (e2 >= dy)
+//		{
+//			err += dy;
+//			data->x0 += sx;
+//		}
+//		if (e2 <= dx)
+//		{
+//			err += dx;
+//			data->y0 += sy;
+//		}
+//	}
+//}
 
 void	grid_maker(t_data *data)
 {
@@ -86,6 +131,7 @@ void	grid_maker(t_data *data)
 			ft_printf("data->col = %d\n", data->col);
 			data->col++;
 		}
+			ft_printf("data->row = %d\n", data->row);
 		data->row++;
 	}
 }
@@ -125,6 +171,7 @@ int	win_init(t_data *data)
 	ver_corn(data);
 	grid_maker(data);
 	mlx_loop_hook(data->mlx, ft_loop, data);
+	mlx_key_hook(data->win, &handle_input, data);
 	mlx_loop(data->mlx);
 	return (0);
 }
