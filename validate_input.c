@@ -14,7 +14,6 @@
 
 void	validate_input(t_data *data, char *filename)
 {
-	ft_printf("validate_input\n");
 	int		filen;
 	char	*line;
 
@@ -33,7 +32,6 @@ void	validate_input(t_data *data, char *filename)
 
 int	map_info(t_data *data, char *line)
 {
-	ft_printf("map_info\n");
 	data->map_w = word_c(line, ' ');
 	while (line)
 	{
@@ -49,7 +47,6 @@ int	map_info(t_data *data, char *line)
 
 void	map_parsing(t_data *data)
 {
-	ft_printf("map_parsing\n");
 	char	*line;
 	char	**num;
 
@@ -79,7 +76,6 @@ void	map_parsing(t_data *data)
 
 void	vertices(t_data *data)
 {
-	ft_printf("vertices\n");
 	int	i;
 
 	i = 0;
@@ -107,15 +103,16 @@ void	vertices(t_data *data)
 
 void	ver_corn(t_data *data)
 {
-	ft_printf("ver_corn\n");
 	int		i;
 	float	x;
 	float	y;
 	float	z;
-	float	center_x = (data->map_w -1) / 2.0;
-	float	center_y = (data->map_h -1) / 2.0;
+	float	center_x;
+	float	center_y;
 
 	i = 0;
+	center_x = (data->map_w - 1);
+	center_y = (data->map_h - 1) / 1.5;
 	data->corners = malloc(data->map_h * data->map_w * sizeof(t_corners));
 	if (!data->corners)
 		found_error("Error/vercn: Memory Allocation Failed");
@@ -124,11 +121,10 @@ void	ver_corn(t_data *data)
 		x = data->vertices[i].x - center_x;
 		y = data->vertices[i].y - center_y;
 		z = data->vertices[i].z * data->altitude;
-		data->corners[i].x = ((x - y) * cosf(data->alpha)) * data->scale + WIDTH / 2;
-		data->corners[i].y = ((x + y) * sinf(data->alpha) - z) * data->scale + HEIGHT / 2;
-//		data->corners[i].x *= data->scale;
-//		data->corners[i].y *= data->scale;
+		data->corners[i].x = ((x - y) * cosf(data->alpha))
+			* data->scale + WIDTH / 2;
+		data->corners[i].y = ((x + y) * sinf(data->alpha) - z)
+			* data->scale + HEIGHT / 2;
 		i++;
 	}
 }
-
