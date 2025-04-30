@@ -15,7 +15,7 @@
 void	draw_right(t_data *data)
 {
 	if ((data->i + 1) % data->map_w == 0)
-		return	;
+		return ;
 	data->x0 = (int)data->corners[data->i].x;
 	data->y0 = (int)data->corners[data->i].y;
 	data->x1 = (int)data->corners[data->i + 1].x;
@@ -26,7 +26,7 @@ void	draw_right(t_data *data)
 void	draw_down(t_data *data)
 {
 	if ((data->row + 1) >= data->map_h)
-		return	;
+		return ;
 	data->x0 = (int)data->corners[data->i].x;
 	data->y0 = (int)data->corners[data->i].y;
 	data->x1 = (int)data->corners[data->i + data->map_w].x;

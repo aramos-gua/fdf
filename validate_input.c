@@ -111,8 +111,8 @@ void	ver_corn(t_data *data)
 	float	center_y;
 
 	i = 0;
-	center_x = (data->map_w - 1);
-	center_y = (data->map_h - 1) / 1.5;
+	center_x = (data->map_w - 1) / 2;
+	center_y = (data->map_h - 1) / 2;
 	data->corners = malloc(data->map_h * data->map_w * sizeof(t_corners));
 	if (!data->corners)
 		found_error("Error/vercn: Memory Allocation Failed");

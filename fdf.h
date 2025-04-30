@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/28 22:32:41 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:21:38 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ typedef struct s_mlx_data
 	//3D build-up
 	t_vertx		*vertices;//vertices
 	t_corners	*corners;//vertices converted to 2D
+	//transforms
+	float		center_x;
+	float		center_y;
+	float		scale_fax;
+	float		scale_fay;
 }	t_data;
 
 
@@ -90,4 +95,5 @@ void	draw_down(t_data *data);
 void	ft_draw_line(t_data *data, int color);
 void	draw_line_init(t_data *data, int *sx, int *sy, int *err);
 int		ft_loop(t_data *data);
-int	handle_input(int keysym, t_data *data);
+int		handle_input(int keysym, t_data *data);
+void	transforms(t_data *data);

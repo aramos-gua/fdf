@@ -31,6 +31,8 @@ int	handle_input(int keysym, t_data *data)
 		data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 		data->addr = mlx_get_data_addr(data->img, &data->bpp,
 				&data->line_length, &data->endian);
+		if (data->corners)
+			free(data->corners);
 		ver_corn(data);
 		grid_maker(data);
 		mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
@@ -98,8 +100,8 @@ void	data_init(t_data *data, char **argv)
 	data->map_h = 0;
 	data->map_w = 0;
 	data->scale = 30;
-	data->alpha = 7.37;
-	data->altitude = 1;
+	data->alpha = 0.523599;
+	data->altitude = 0.2;
 	data->translation = 1;
 	data->map_path = argv[1];
 }
