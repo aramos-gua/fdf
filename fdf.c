@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:42:40 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/30 19:17:06 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/30 21:55:39 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	handle_input(int keysym, t_data *data)
 		mlx_destroy_window(data->mlx, data->win);
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
-		exit(1);
+		exit(0);
 	}
 	else if (keysym == XK_Down || keysym == XK_Up)
 	{
@@ -31,8 +31,6 @@ int	handle_input(int keysym, t_data *data)
 		data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 		data->addr = mlx_get_data_addr(data->img, &data->bpp,
 				&data->line_length, &data->endian);
-		if (data->corners)
-			free(data->corners);
 		transforms(data);
 		//ver_corn(data);
 		grid_maker(data);
@@ -98,18 +96,16 @@ void	data_init(t_data *data, char **argv)
 {
 	data->y = 0;
 	data->x = 0;
+	data->fd = -1;
 	data->map_w = 0;
 	data->map_h = 0;
 	data->corners = NULL;
-	data->altitude = 0.2;
+	data->altitude = 0.5;
 	data->vertices = NULL;
 	data->translation = 1;
 	data->alpha = 0.523599;
 	data->final_tab = NULL;
 	data->map_path = argv[1];
-	data->scale_fax = (float)WIDTH / data->map_w;
-	data->scale_fay = (float)HEIGHT / data->map_h;
-	data->scale = fmin(data->scale_fax, data->scale_fay);
 }
 
 int	win_init(t_data *data)
@@ -123,6 +119,11 @@ int	win_init(t_data *data)
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bpp,
 			&data->line_length, &data->endian);
+	if (data->map_h == 0 || data->map_w ==0)
+		found_error("Error: Invalid Map Dimensions");
+	data->scale_fax = (float)WIDTH / data->map_w;
+	data->scale_fay = (float)HEIGHT / data->map_h;
+	data->scale = fmin(data->scale_fax, data->scale_fay) / 2;
 	//ver_corn(data);
 	transforms(data);
 	grid_maker(data);

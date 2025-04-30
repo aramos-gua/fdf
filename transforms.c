@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:09:46 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/30 19:14:08 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/30 21:39:55 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	transforms(t_data *data)
 	{
 		x = data->vertices[i].x - data->center_x;
 		y = data->vertices[i].y - data->center_y;
-		z = data->vertices[i].z * data->altitude;
+		z = -data->vertices[i].z * data->altitude;
 		data->corners[i].x = ((x - y) * cos(data->alpha) - z * sin(data->alpha)) *data->scale + WIDTH / 2 + data->translation;
 		data->corners[i].y = ((x + y) * sin(data->alpha) + z * cos(data->alpha)) *data->scale + HEIGHT / 2 + data->translation;
 		i++;
