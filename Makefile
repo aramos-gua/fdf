@@ -38,7 +38,8 @@ LIBFT = $(LIBFTDIR)/libft.a
 # Files
 SRC = ./fdf.c\
 	  ./validate_input.c\
-	  ./draw_tools.c
+	  ./draw_tools.c\
+	  ./transforms.c
 
 OBJ = $(SRC:.c=.o)
 

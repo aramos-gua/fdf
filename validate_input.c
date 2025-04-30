@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:51:56 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/28 22:32:43 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/30 19:14:51 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	map_parsing(t_data *data)
 		data->y++;
 		free(num);
 	}
+	close(data->fd);
 }
 
 void	vertices(t_data *data)
@@ -95,36 +96,34 @@ void	vertices(t_data *data)
 		}
 		data->y++;
 	}
+	transforms(data);
 	i = 0;
 	while (i < data->map_h)
 		free(data->final_tab[i++]);
 	free(data->final_tab);
 }
 
-void	ver_corn(t_data *data)
-{
-	int		i;
-	float	x;
-	float	y;
-	float	z;
-	float	center_x;
-	float	center_y;
-
-	i = 0;
-	center_x = (data->map_w - 1) / 2;
-	center_y = (data->map_h - 1) / 2;
-	data->corners = malloc(data->map_h * data->map_w * sizeof(t_corners));
-	if (!data->corners)
-		found_error("Error/vercn: Memory Allocation Failed");
-	while (i < (data->map_h * data->map_w))
-	{
-		x = data->vertices[i].x - center_x;
-		y = data->vertices[i].y - center_y;
-		z = data->vertices[i].z * data->altitude;
-		data->corners[i].x = ((x - y) * cosf(data->alpha))
-			* data->scale + WIDTH / 2;
-		data->corners[i].y = ((x + y) * sinf(data->alpha) - z)
-			* data->scale + HEIGHT / 2;
-		i++;
-	}
-}
+//void	ver_corn(t_data *data)
+//{
+//	int		i;
+//	float	x;
+//	float	y;
+//	float	z;
+//	float	center_x;
+//	float	center_y;
+//
+//	i = 0;
+//	center_x = (data->map_w - 1) / 2;
+//	center_y = (data->map_h - 1) / 2;
+//	while (i < (data->map_h * data->map_w))
+//	{
+//		x = data->vertices[i].x - center_x;
+//		y = data->vertices[i].y - center_y;
+//		z = data->vertices[i].z * data->altitude;
+//		data->corners[i].x = ((x - y) * cosf(data->alpha))
+//			* data->scale + WIDTH / 2;
+//		data->corners[i].y = ((x + y) * sinf(data->alpha) - z)
+//			* data->scale + HEIGHT / 2;
+//		i++;
+//	}
+//}
