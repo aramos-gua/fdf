@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:51:56 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/30 21:27:51 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/30 22:06:57 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void	map_parsing(t_data *data)
 	data->fd = open(data->map_path, O_RDONLY);
 	data->final_tab = malloc(data->map_h * sizeof(int *));
 	if (!data->final_tab)
-		found_error("Error/ftab: Memory Allocation Failed");
+		found_error("Error/m_parsing: Memory Allocation Failed");
 	while (data->y < data->map_h)
 	{
 		data->final_tab[data->y] = malloc(data->map_w * sizeof(int));
 		if (!data->final_tab[data->y])
-			found_error("Error/ftabs: Memory Allocation Failed");
+			found_error("Error/m_parsing: Memory Allocation Failed");
 		line = get_next_line(data->fd);
 		num = ft_split(line, ' ');
 		free(line);
@@ -82,7 +82,7 @@ void	vertices(t_data *data)
 	i = 0;
 	data->vertices = malloc (data->map_w * data->map_h * sizeof(t_vertx));
 	if (!data->vertices)
-		found_error("Error/vrtc: Memory Allocation Failed");
+		found_error("Error/vertices: Memory Allocation Failed");
 	data->y = 0;
 	while (data->y < data->map_h)
 	{
@@ -101,28 +101,3 @@ void	vertices(t_data *data)
 		free(data->final_tab[i++]);
 	free(data->final_tab);
 }
-
-//void	ver_corn(t_data *data)
-//{
-//	int		i;
-//	float	x;
-//	float	y;
-//	float	z;
-//	float	center_x;
-//	float	center_y;
-//
-//	i = 0;
-//	center_x = (data->map_w - 1) / 2;
-//	center_y = (data->map_h - 1) / 2;
-//	while (i < (data->map_h * data->map_w))
-//	{
-//		x = data->vertices[i].x - center_x;
-//		y = data->vertices[i].y - center_y;
-//		z = data->vertices[i].z * data->altitude;
-//		data->corners[i].x = ((x - y) * cosf(data->alpha))
-//			* data->scale + WIDTH / 2;
-//		data->corners[i].y = ((x + y) * sinf(data->alpha) - z)
-//			* data->scale + HEIGHT / 2;
-//		i++;
-//	}
-//}

@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:42:40 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/30 21:55:39 by aramos           ###   ########.fr       */
+/*   Updated: 2025/04/30 22:19:10 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,11 @@ int	handle_input(int keysym, t_data *data)
 	else if (keysym == XK_Down || keysym == XK_Up)
 	{
 		if (keysym == XK_Down)
-			data->scale -= 5;
+			data->scale -= 50;
 		else
-			data->scale += 5;
-		data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-		data->addr = mlx_get_data_addr(data->img, &data->bpp,
-				&data->line_length, &data->endian);
+			data->scale += 50;
 		transforms(data);
-		//ver_corn(data);
 		grid_maker(data);
-		mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	}
 	return (0);
 }
@@ -124,7 +119,6 @@ int	win_init(t_data *data)
 	data->scale_fax = (float)WIDTH / data->map_w;
 	data->scale_fay = (float)HEIGHT / data->map_h;
 	data->scale = fmin(data->scale_fax, data->scale_fay) / 2;
-	//ver_corn(data);
 	transforms(data);
 	grid_maker(data);
 	mlx_loop_hook(data->mlx, ft_loop, data);
