@@ -14,10 +14,10 @@
 
 static void	init_bounds(float *min_x, float *max_x, float *min_y, float *max_y)
 {
-	*min_x = 0.0;
-	*max_x = 0.0;
-	*min_y = 0.0;
-	*max_y = 0.0;
+	*min_x = FLT_MAX;
+	*max_x = -FLT_MAX;
+	*min_y = FLT_MAX;
+	*max_y = -FLT_MAX;
 }
 
 static void	compute_bounds(t_data *data, float *min_x, float *max_x, float *min_y, float *max_y)
@@ -46,10 +46,10 @@ static void	compute_bounds(t_data *data, float *min_x, float *max_x, float *min_
 		if (i == 0 || iso_y > *max_y)
 			*max_y = iso_y;
 		i++;
-//		ft_printf("min_x: %d\n", min_x);
-//		ft_printf("max_x: %d\n", max_x);
-//		ft_printf("min_y: %d\n", min_y);
-//		ft_printf("max_y: %d\n", max_y);
+		printf("min_x: %f\n", *min_x);
+		printf("max_x: %f\n", *max_x);
+		printf("min_y: %f\n", *min_y);
+		printf("max_y: %f\n", *max_y);
 	}
 }
 
@@ -62,7 +62,7 @@ static void	calculate_scale_and_offset(t_data *data, float min_x, float max_x, f
 
 	projected_w = max_x - min_x;
 	projected_h = max_y - min_y;
-	//data->scale = (fmin(WIDTH / projected_w, HEIGHT / projected_h) * 0.9) - 50;
+	data->scale = fmin(HEIGHT / projected_h, WIDTH / projected_w) * 0.5;
 	center_x = (min_x + max_x) / 2.0;
 	center_y = (min_y + max_y) / 2.0;
 	data->center_x = WIDTH / 2.0 - center_x * data->scale;
@@ -99,11 +99,6 @@ void	transforms(t_data *data)
 	float	min_y;
 	float	max_y;
 
-	//if (data->corners)
-	//{
-	//	ft_printf("HEY!\n");
-	//	free(data->corners);
-	//}
 	data->corners = malloc(data->map_w * data->map_h * sizeof(t_corners));
 	if (!data->corners)
 		found_error("Error/transforms: Memory allocation failed");
@@ -112,4 +107,3 @@ void	transforms(t_data *data)
 	calculate_scale_and_offset(data, min_x, max_x, min_y, max_y);
 	apply_transform(data);
 }
-

@@ -102,7 +102,7 @@ void	data_init(t_data *data, char **argv)
 	data->altitude = 0.2;
 	data->vertices = NULL;
 	data->translation = 1;
-	data->alpha = 0.523599;
+	data->alpha = M_PI / 4;
 	data->final_tab = NULL;
 	data->map_path = argv[1];
 }
@@ -124,9 +124,7 @@ int	win_init(t_data *data)
 		return (-1);
 	if (data->map_h == 0 || data->map_w ==0)
 		found_error("Error: Invalid Map Dimensions");
-	data->scale_fax = (float)WIDTH / data->map_w;
-	data->scale_fay = (float)HEIGHT / data->map_h;
-	data->scale = fmin(data->scale_fax, data->scale_fay) / 3;
+	data->scale = 1.0;
 	transforms(data);
 	grid_maker(data);
 	mlx_loop_hook(data->mlx, ft_loop, data);

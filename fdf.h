@@ -14,10 +14,11 @@
 #include "libft/libft.h"
 #include <X11/keysym.h>
 #include <stdlib.h>
+#include <float.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <math.h>
-#define HEIGHT 1800
+#define HEIGHT 1080
 #define WIDTH 1920
 
 typedef struct	s_vertx
