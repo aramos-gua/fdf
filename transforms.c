@@ -58,7 +58,7 @@ static void	calculate_scale_and_offset(t_data *data, float min_x, float max_x, f
 
 	projected_w = max_x - min_x;
 	projected_h = max_y - min_y;
-	data->scale = fmin(HEIGHT / projected_h, WIDTH / projected_w) * 0.9;
+	data->scale = fmin(HEIGHT / projected_h, WIDTH / projected_w) * 0.8;
 	center_x = (min_x + max_x) / 2.0;
 	center_y = (min_y + max_y) / 2.0;
 	data->center_x = WIDTH / 2.0 - center_x * data->scale;
@@ -104,13 +104,6 @@ void	transforms(t_data *data)
 		found_error("Error/transforms: Memory allocation failed");
 	init_bounds(&min_x, &max_x, &min_y, &max_y);
 	compute_bounds(data, &min_x, &max_x, &min_y, &max_y);
-//	float	projected_w = max_x - min_x;
-//	float	projected_h = max_y - min_y;
-//	data->scale = fmin((float)WIDTH / projected_w, (float)HEIGHT / projected_h);
-//	float scaled_center_x = (min_x + max_x) / 2.0f * data->scale;
-//	float scaled_center_y = (min_y + max_y) / 2.0f * data->scale;
-//	data->center_x = WIDTH / 2.0f - scaled_center_x;
-//	data->center_y = HEIGHT / 2.0f - scaled_center_y;
 	calculate_scale_and_offset(data, min_x, max_x, min_y, max_y);
 	apply_transform(data);
 }
