@@ -46,6 +46,10 @@ static void	compute_bounds(t_data *data, float *min_x, float *max_x, float *min_
 		if (i == 0 || iso_y > *max_y)
 			*max_y = iso_y;
 		i++;
+//		ft_printf("min_x: %d\n", min_x);
+//		ft_printf("max_x: %d\n", max_x);
+//		ft_printf("min_y: %d\n", min_y);
+//		ft_printf("max_y: %d\n", max_y);
 	}
 }
 
@@ -58,7 +62,7 @@ static void	calculate_scale_and_offset(t_data *data, float min_x, float max_x, f
 
 	projected_w = max_x - min_x;
 	projected_h = max_y - min_y;
-	data->scale = (fmin(WIDTH / projected_w, HEIGHT / projected_h) * 0.9) - 50;
+	//data->scale = (fmin(WIDTH / projected_w, HEIGHT / projected_h) * 0.9) - 50;
 	center_x = (min_x + max_x) / 2.0;
 	center_y = (min_y + max_y) / 2.0;
 	data->center_x = WIDTH / 2.0 - center_x * data->scale;
@@ -95,8 +99,11 @@ void	transforms(t_data *data)
 	float	min_y;
 	float	max_y;
 
-	if (data->corners)
-		free(data->corners);
+	//if (data->corners)
+	//{
+	//	ft_printf("HEY!\n");
+	//	free(data->corners);
+	//}
 	data->corners = malloc(data->map_w * data->map_h * sizeof(t_corners));
 	if (!data->corners)
 		found_error("Error/transforms: Memory allocation failed");

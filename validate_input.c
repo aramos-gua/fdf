@@ -41,6 +41,7 @@ int	map_info(t_data *data, char *line)
 		free(line);
 		line = get_next_line(data->fd);
 	}
+	ft_printf("map_w: %d\nmap_h: %d\n", data->map_w, data->map_h);
 	close(data->fd);
 	return (0);
 }
@@ -77,10 +78,11 @@ void	map_parsing(t_data *data)
 
 void	vertices(t_data *data)
 {
+	ft_printf("Filling vertices\n");
 	int	i;
 
 	i = 0;
-	data->vertices = malloc (data->map_w * data->map_h * sizeof(t_vertx));
+	data->vertices = malloc ((data->map_w * data->map_h) * sizeof(t_vertx));
 	if (!data->vertices)
 		found_error("Error/vertices: Memory Allocation Failed");
 	data->y = 0;
@@ -96,8 +98,13 @@ void	vertices(t_data *data)
 		}
 		data->y++;
 	}
-	i = 0;
-	while (i < data->map_h)
-		free(data->final_tab[i++]);
-	free(data->final_tab);
+	for (int i = 0; i < (data->map_h * data->map_h); i++)
+	{
+		printf("Vertex[%d] = { x: %d, y: %d, z: %d }\n",
+			i, data->vertices[i].x, data->vertices[i].y, data->vertices[i].z);
+	}
+//	i = 0;
+//	while (i < data->map_h)
+//		free(data->final_tab[i++]);
+//	free(data->final_tab);
 }

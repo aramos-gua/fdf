@@ -61,11 +61,8 @@ void	draw_line_init(t_data *data, int *sx, int *sy, int *err)
 
 int	ft_loop(t_data *data)
 {
-	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	data->addr = mlx_get_data_addr(data->img, &data->bpp,
-			&data->line_length, &data->endian);
-	transforms(data);
-	grid_maker(data);
+//	transforms(data);
+//	grid_maker(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (0);
 }

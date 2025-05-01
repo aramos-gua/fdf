@@ -25,11 +25,15 @@ int	handle_input(int keysym, t_data *data)
 	else if (keysym == XK_Down || keysym == XK_Up)
 	{
 		if (keysym == XK_Down)
-			data->scale -= 50;
+			data->scale -= 5;
 		else
-			data->scale += 50;
+			data->scale += 5;
+		data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+		data->addr = mlx_get_data_addr(data->img, &data->bpp,
+				&data->line_length, &data->endian);
 		transforms(data);
 		grid_maker(data);
+		mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	}
 	return (0);
 }
@@ -44,7 +48,7 @@ void	ft_draw_line(t_data *data, int color)
 	draw_line_init(data, &sx, &sy, &err);
 	while (1)
 	{
-		ft_put_pixel(data, data->x0, data->y0, color);
+		ft_put_pixel(data, data->x0, data->y0, color);//data->y0-325
 		if (data->x0 == data->x1 && data->y0 == data->y1)
 			break ;
 		e2 = 2 * err;
@@ -95,7 +99,7 @@ void	data_init(t_data *data, char **argv)
 	data->map_w = 0;
 	data->map_h = 0;
 	data->corners = NULL;
-	data->altitude = 0.5;
+	data->altitude = 0.2;
 	data->vertices = NULL;
 	data->translation = 1;
 	data->alpha = 0.523599;
@@ -112,13 +116,17 @@ int	win_init(t_data *data)
 	if (!data->win)
 		return (-1);
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	if (!data->img)
+		return (-1);
 	data->addr = mlx_get_data_addr(data->img, &data->bpp,
 			&data->line_length, &data->endian);
+	if (!data->addr)
+		return (-1);
 	if (data->map_h == 0 || data->map_w ==0)
 		found_error("Error: Invalid Map Dimensions");
 	data->scale_fax = (float)WIDTH / data->map_w;
 	data->scale_fay = (float)HEIGHT / data->map_h;
-	data->scale = fmin(data->scale_fax, data->scale_fay) / 2;
+	data->scale = fmin(data->scale_fax, data->scale_fay) / 3;
 	transforms(data);
 	grid_maker(data);
 	mlx_loop_hook(data->mlx, ft_loop, data);
@@ -137,7 +145,8 @@ int	main(int argc, char **argv)
 	validate_input(&data, data.map_path);
 	map_parsing(&data);
 	vertices(&data);
-	win_init(&data);
+	if (win_init(&data) != 0)
+		found_error("Error/MiniLibX: Render Error");
 	free(data.vertices);
 	return (0);
 }
