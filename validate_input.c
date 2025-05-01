@@ -98,11 +98,6 @@ void	vertices(t_data *data)
 		}
 		data->y++;
 	}
-	for (int i = 0; i < (data->map_h * data->map_h); i++)
-	{
-		printf("Vertex[%d] = { x: %d, y: %d, z: %d }\n",
-			i, data->vertices[i].x, data->vertices[i].y, data->vertices[i].z);
-	}
 //	i = 0;
 //	while (i < data->map_h)
 //		free(data->final_tab[i++]);
