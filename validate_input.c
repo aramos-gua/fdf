@@ -78,7 +78,6 @@ void	map_parsing(t_data *data)
 
 void	vertices(t_data *data)
 {
-	ft_printf("Filling vertices\n");
 	int	i;
 
 	i = 0;
@@ -98,8 +97,4 @@ void	vertices(t_data *data)
 		}
 		data->y++;
 	}
-//	i = 0;
-//	while (i < data->map_h)
-//		free(data->final_tab[i++]);
-//	free(data->final_tab);
 }
