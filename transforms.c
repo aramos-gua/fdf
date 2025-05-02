@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:09:46 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/30 22:20:27 by aramos           ###   ########.fr       */
+/*   Updated: 2025/05/02 09:25:29 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,20 @@ static void	calculate_scale_and_offset(t_data *data, float min_x, float max_x, f
 	float	projected_h;
 	float	center_x;
 	float	center_y;
-
-	projected_w = max_x - min_x;
-	projected_h = max_y - min_y;
-	data->scale = fmin(HEIGHT / projected_h, WIDTH / projected_w) * 0.8;
+	if (data->scale == 0.0)
+	{
+		projected_w = max_x - min_x;
+		projected_h = max_y - min_y;
+		data->scale_base = fmin(HEIGHT / projected_h, WIDTH / projected_w) * 0.8;
+		data->scale = data->scale_base;
+	}
 	center_x = (min_x + max_x) / 2.0;
 	center_y = (min_y + max_y) / 2.0;
 	data->center_x = WIDTH / 2.0 - center_x * data->scale;
 	data->center_y = HEIGHT / 2.0 - center_y * data->scale;
+	printf("x: min %.2f, max %.2f | y: min %.2f, max %.2f\n",
+			min_x, max_x, min_y, max_y);
+	printf("scale = %d\n", data->scale);
 //	if (data->center_y > 0)
 //		data->center_y = 5;
 }
@@ -88,6 +94,9 @@ static void	apply_transform(t_data *data)
 		data->corners[i].y = iso_y * data->scale + data->center_y;
 		i++;
 	}
+	i = 0;
+//	while (i < (data->map_w * data->map_h))
+//		data->vertices[i].color = get_z_color(data->vertices[i].z, data);
 }
 
 void	transforms(t_data *data)

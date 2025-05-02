@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:51:56 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/30 22:06:57 by aramos           ###   ########.fr       */
+/*   Updated: 2025/05/02 09:02:59 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	vertices(t_data *data)
 		while (data->x < data->map_w)
 		{
 			data->vertices[i] = (t_vertx){data->x, data->y,
-				data->final_tab[data->y][data->x]};
+				data->final_tab[data->y][data->x], 0xFFFFFF};
 			i++;
 			data->x++;
 		}

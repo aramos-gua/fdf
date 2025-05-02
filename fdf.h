@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/30 18:21:38 by aramos           ###   ########.fr       */
+/*   Updated: 2025/05/02 09:24:40 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct	s_vertx
 	int			x;	
 	int			y;	
 	int			z;	
+	int			color;
 }	t_vertx;
 
 typedef struct	s_corners
@@ -45,12 +46,12 @@ typedef struct s_mlx_data
 	int			line_length;//number of bytes per row
 	int			endian;//how color bytes are stored
 	//line information
-	int			x0;
-	int			y0;
-	int			x1;
-	int			y1;
-	int			dx;
-	int			dy;
+	int			x0;//start line x-axis
+	int			y0;//start line y-axis
+	int			x1;//end line x-axis
+	int			y1;//end line y-axis
+	int			dx;//dif start-end x-axis
+	int			dy;//dif start-end y-axis
 	//map info
 	int			fd;//fd of file
 	char		*map_path;//map file
@@ -65,7 +66,8 @@ typedef struct s_mlx_data
 	int			col;//current column in 2D
 	int			row;//current row in 2D
 	//settings for map
-	int			scale;//size of squares in grid
+	int			scale_base;//size of squares in grid
+	int			scale;//modifiable scale
 	int			translation;//scroll-info
 	float		altitude;//change in z
 	float		zoom;//zoom value
@@ -78,6 +80,9 @@ typedef struct s_mlx_data
 	float		center_y;
 	float		scale_fax;
 	float		scale_fay;
+	//color gradients
+	int			min_z;
+	int			max_z;
 }	t_data;
 
 
@@ -98,3 +103,6 @@ void	draw_line_init(t_data *data, int *sx, int *sy, int *err);
 int		ft_loop(t_data *data);
 int		handle_input(int keysym, t_data *data);
 void	transforms(t_data *data);
+void	compute_z_bounds(t_data *data);
+int		get_z_color(int z, t_data *data);
+int		handle_exit(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:42:40 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/30 22:19:10 by aramos           ###   ########.fr       */
+/*   Updated: 2025/05/02 09:37:51 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ int	handle_input(int keysym, t_data *data)
 	if (keysym == XK_Escape)
 	{
 		printf("The %d key was pressed\n\n", keysym);
-		mlx_destroy_window(data->mlx, data->win);
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
-		exit(0);
+		handle_exit(data);
 	}
 	else if (keysym == XK_Down || keysym == XK_Up)
 	{
@@ -28,6 +25,7 @@ int	handle_input(int keysym, t_data *data)
 			data->scale -= 5;
 		else
 			data->scale += 5;
+		mlx_destroy_image(data->mlx, data->img);
 		data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 		data->addr = mlx_get_data_addr(data->img, &data->bpp,
 				&data->line_length, &data->endian);
@@ -124,12 +122,12 @@ int	win_init(t_data *data)
 		return (-1);
 	if (data->map_h == 0 || data->map_w ==0)
 		found_error("Error: Invalid Map Dimensions");
-	data->scale = 1.0;
+	data->scale = 0.0;
 	transforms(data);
 	grid_maker(data);
-	mlx_loop_hook(data->mlx, ft_loop, data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	mlx_key_hook(data->win, &handle_input, data);
-	mlx_loop(data->mlx);
+	mlx_hook(data, 10, 0, handle_exit, data);
 	return (0);
 }
 
@@ -143,8 +141,12 @@ int	main(int argc, char **argv)
 	validate_input(&data, data.map_path);
 	map_parsing(&data);
 	vertices(&data);
+	//compute_z_bounds(&data);
 	if (win_init(&data) != 0)
 		found_error("Error/MiniLibX: Render Error");
-	free(data.vertices);
+	for (int i = 0; i < data.map_h; i++)
+		free(data.final_tab[i++]);
+	free(data.final_tab);
+	mlx_loop(data.mlx);
 	return (0);
 }
