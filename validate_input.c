@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:51:56 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/02 09:02:59 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/02 13:25:46 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,21 @@ int	map_info(t_data *data, char *line)
 		free(line);
 		line = get_next_line(data->fd);
 	}
-	ft_printf("map_w: %d\nmap_h: %d\n", data->map_w, data->map_h);
 	close(data->fd);
 	return (0);
+}
+
+static void	parse_row(t_data *data, char**num, int y)
+{
+	int	x;
+
+	x = 0;
+	while (x < data->map_w)
+	{
+		data->final_tab[y][x] = ft_atoi(num[x]);
+		free(num[x]);
+		x++;
+	}
 }
 
 void	map_parsing(t_data *data)
@@ -63,15 +75,9 @@ void	map_parsing(t_data *data)
 		line = get_next_line(data->fd);
 		num = ft_split(line, ' ');
 		free(line);
-		data->x = 0;
-		while (data->x < data->map_w)
-		{
-			data->final_tab[data->y][data->x] = ft_atoi(num[data->x]);
-			free(num[data->x]);
-			(data->x)++;
-		}
-		data->y++;
+		parse_row(data, num, data->y);
 		free(num);
+		data->y++;
 	}
 	close(data->fd);
 }

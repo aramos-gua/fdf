@@ -6,20 +6,27 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/02 10:57:12 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/02 13:13:03 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_linux/mlx.h"
-#include "libft/libft.h"
-#include <X11/keysym.h>
-#include <stdlib.h>
-#include <float.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <math.h>
-#define HEIGHT 1080
-#define WIDTH 1920
+#ifndef FDF_H
+# define FDF_H
+# ifndef WEIGHT
+#  define HEIGHT 1080
+#  ifndef WIDTH
+#   define WIDTH 1920
+#  endif
+# endif
+
+# include "mlx_linux/mlx.h"
+# include "libft/libft.h"
+# include <X11/keysym.h>
+# include <stdlib.h>
+# include <float.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <math.h>
 
 typedef struct	s_vertx
 {
@@ -75,6 +82,8 @@ typedef struct s_mlx_data
 	//3D build-up
 	t_vertx		*vertices;//vertices
 	t_corners	*corners;//vertices converted to 2D
+	float		iso_x;//x after prokection
+	float		iso_y;//y after projection
 	//transforms
 	float		center_x;
 	float		center_y;
@@ -101,6 +110,14 @@ typedef struct	s_line_vars
 	float	t;
 }	t_line_vars;
 
+typedef struct	s_bounds
+{
+	float	min_x;
+	float	min_y;
+	float	max_x;
+	float	max_y;
+}	t_bounds;
+
 //Parse input
 void	found_error(char *message);
 void	validate_input(t_data *data, char *filename);
@@ -123,3 +140,4 @@ int		handle_exit(t_data *data);
 int		interpolate_color(int color1, int color2, float t);
 void	update_coordenates(t_line *line, t_line_vars *vars);
 void	compute_vertex_colors(t_data *data);
+#endif

@@ -39,6 +39,7 @@ LIBFT = $(LIBFTDIR)/libft.a
 SRC = ./fdf.c\
 	  ./validate_input.c\
 	  ./draw_tools.c\
+	  ./grid_maker_helpers.c\
 	  ./transforms.c\
 	  ./colors.c\
 	  ./freexit.c
