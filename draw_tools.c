@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 20:56:54 by aramos            #+#    #+#             */
-/*   Updated: 2025/04/30 22:12:11 by aramos           ###   ########.fr       */
+/*   Updated: 2025/05/02 10:56:34 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,31 @@
 
 void	draw_right(t_data *data)
 {
+	t_line	line;
+
 	if ((data->i + 1) % data->map_w == 0)
 		return ;
-	data->x0 = (int)data->corners[data->i].x;
-	data->y0 = (int)data->corners[data->i].y;
-	data->x1 = (int)data->corners[data->i + 1].x;
-	data->y1 = (int)data->corners[data->i + 1].y;
-	ft_draw_line(data, 0xFFFFFFFF);
+	line.a.x = (int)data->corners[data->i].x;
+	line.a.y = (int)data->corners[data->i].y;
+	line.b.x = (int)data->corners[data->i + 1].x;
+	line.b.y = (int)data->corners[data->i + 1].y;
+	line.a.color = get_z_color(data->vertices[data->i].z, data);
+	line.b.color = get_z_color(data->vertices[data->i + 1].z, data);
+	ft_draw_line(data, line);
 }
-
 void	draw_down(t_data *data)
 {
+	t_line	line;
+
 	if ((data->row + 1) >= data->map_h)
 		return ;
-	data->x0 = (int)data->corners[data->i].x;
-	data->y0 = (int)data->corners[data->i].y;
-	data->x1 = (int)data->corners[data->i + data->map_w].x;
-	data->y1 = (int)data->corners[data->i + data->map_w].y;
-	ft_draw_line(data, 0xFFFFFFFF);
+	line.a.x = (int)data->corners[data->i].x;
+	line.a.y = (int)data->corners[data->i].y;
+	line.b.x = (int)data->corners[data->i + data->map_w].x;
+	line.b.y = (int)data->corners[data->i + data->map_w].y;
+	line.a.color = get_z_color(data->vertices[data->i].z, data);
+	line.b.color = get_z_color(data->vertices[data->i + data->map_w].z, data);
+	ft_draw_line(data, line);
 }
 
 void	ft_put_pixel(t_data *data, int x, int y, int color)
@@ -44,25 +51,30 @@ void	ft_put_pixel(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw_line_init(t_data *data, int *sx, int *sy, int *err)
+void	update_coordenates(t_line *line, t_line_vars *vars)
 {
-	if (data->x0 < data->x1)
-		*sx = 1;
-	else
-		*sx = -1;
-	if (data->y0 < data->y1)
-		*sy = 1;
-	else
-		*sy = -1;
-	data->dx = abs(data->x1 - data->x0);
-	data->dy = -abs(data->y1 - data->y0);
-	*err = data->dx + data->dy;
+	if (vars->e2 >= vars->dy)
+	{
+		vars->err += vars->dy;
+		if (line->a.x < line->b.x)
+			line->a.x += 1;
+		else
+			line->a.x += -1;
+	}
+	if (vars->e2 <= vars->dx)
+	{
+		vars->err += vars->dx;
+		if (line->a.y < line->b.y)
+			line->a.y += 1;
+		else
+			line->a.y += -1;
+	}
 }
 
-int	ft_loop(t_data *data)
+void	draw_line_init(t_line *line, t_line_vars *vars)
 {
-//	transforms(data);
-//	grid_maker(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-	return (0);
+	vars->dx = abs(line->b.x - line->a.x);
+	vars->dy = -abs(line->b.y - line->a.y);
+	vars->err = vars->dx + vars->dy;
+	vars->step = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:42:40 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/02 09:37:51 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/02 11:02:18 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,23 @@ int	handle_input(int keysym, t_data *data)
 	return (0);
 }
 
-void	ft_draw_line(t_data *data, int color)
+void	ft_draw_line(t_data *data, t_line line)
 {
-	int	sx;
-	int	sy;
-	int	err;
-	int	e2;
+	t_line_vars	vars;
 
-	draw_line_init(data, &sx, &sy, &err);
+	draw_line_init(&line, &vars);
 	while (1)
 	{
-		ft_put_pixel(data, data->x0, data->y0, color);//data->y0-325
-		if (data->x0 == data->x1 && data->y0 == data->y1)
+		if (vars.dx > -vars.dy)
+			vars.t = (float)vars.step / (float)vars.dx;
+		else
+			vars.t = (float)vars.step / (float)(-vars.dy);
+		ft_put_pixel(data, line.a.x, line.a.y, interpolate_color(line.a.color, line.b.color, vars.t));
+		if (line.a.x == line.b.x && line.a.y == line.b.y)
 			break ;
-		e2 = 2 * err;
-		if (e2 >= data->dy)
-		{
-			err += data->dy;
-			data->x0 += sx;
-		}
-		if (e2 <= data->dx)
-		{
-			err += data->dx;
-			data->y0 += sy;
-		}
+		vars.e2 = 2 * vars.err;
+		update_coordenates(&line, &vars);
+		vars.step++;
 	}
 }
 
@@ -97,10 +90,10 @@ void	data_init(t_data *data, char **argv)
 	data->map_w = 0;
 	data->map_h = 0;
 	data->corners = NULL;
-	data->altitude = 0.2;
+	data->altitude = 1;
 	data->vertices = NULL;
 	data->translation = 1;
-	data->alpha = M_PI / 4;
+	data->alpha = M_PI / 6;
 	data->final_tab = NULL;
 	data->map_path = argv[1];
 }
@@ -141,7 +134,7 @@ int	main(int argc, char **argv)
 	validate_input(&data, data.map_path);
 	map_parsing(&data);
 	vertices(&data);
-	//compute_z_bounds(&data);
+	compute_z_bounds(&data);
 	if (win_init(&data) != 0)
 		found_error("Error/MiniLibX: Render Error");
 	for (int i = 0; i < data.map_h; i++)

@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/02 09:24:40 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/02 10:57:12 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,21 @@ typedef struct s_mlx_data
 	int			max_z;
 }	t_data;
 
+typedef struct	s_line
+{
+	t_vertx	a;
+	t_vertx	b;
+}	t_line;
 
+typedef struct	s_line_vars
+{
+	int		dx;
+	int		dy;
+	int		err;
+	int		e2;
+	int		step;
+	float	t;
+}	t_line_vars;
 
 //Parse input
 void	found_error(char *message);
@@ -98,11 +112,14 @@ void	grid_maker(t_data *data);
 void	draw_right(t_data *data);
 void	ft_put_pixel(t_data *data, int x, int y, int color);
 void	draw_down(t_data *data);
-void	ft_draw_line(t_data *data, int color);
-void	draw_line_init(t_data *data, int *sx, int *sy, int *err);
+void	ft_draw_line(t_data *data, t_line line);
+void	draw_line_init(t_line *line, t_line_vars *vars);
 int		ft_loop(t_data *data);
 int		handle_input(int keysym, t_data *data);
 void	transforms(t_data *data);
 void	compute_z_bounds(t_data *data);
 int		get_z_color(int z, t_data *data);
 int		handle_exit(t_data *data);
+int		interpolate_color(int color1, int color2, float t);
+void	update_coordenates(t_line *line, t_line_vars *vars);
+void	compute_vertex_colors(t_data *data);
