@@ -51,8 +51,8 @@ int	interpolate_color(int c1, int c2, float t)
 	int	b;
 
 	r = ((1 - t) * ((c1 >> 16) & 0xFF)) + (t * ((c2 >> 16) & 0xFF));
-	g = ((1 - t) * ((c1 >> 8) & 0xFF)) + (t * ((c2 >> 8) & 0xFF));
-	b = ((1 - t) * (c1 & 0xFF)) + (t * (c2 & 0xFF));
+	g = ((1 - t) * ((c1 >> 8) & 0x44)) + (t * ((c2 >> 8) & 0x44));
+	b = ((1 - t) * (c1 & 0xDD)) + (t * (c2 & 0xDD));
 	return ((r << 16) | (g << 8) | b);
 }
 

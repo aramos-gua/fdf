@@ -19,9 +19,9 @@ int	handle_input(int keysym, t_data *data)
 	else if (keysym == XK_Down || keysym == XK_Up)
 	{
 		if (keysym == XK_Down)
-			data->scale /= 1.1;
+			data->scale -= 5;
 		else
-			data->scale *= 1.1;
+			data->scale += 5;
 		mlx_destroy_image(data->mlx, data->img);
 		data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 		data->addr = mlx_get_data_addr(data->img, &data->bpp,
@@ -61,7 +61,7 @@ void	data_init(t_data *data, char **argv)
 	data->map_w = 0;
 	data->map_h = 0;
 	data->corners = NULL;
-	data->altitude = 1;
+	data->altitude = 0.05;
 	data->vertices = NULL;
 	data->translation = 1;
 	data->alpha = M_PI / 6;
