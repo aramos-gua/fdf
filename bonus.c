@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 23:11:39 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/05 23:26:41 by aramos           ###   ########.fr       */
+/*   Updated: 2025/05/05 23:36:13 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	reset(t_data *data)
 {
-		data->scale = 0;
-		data->altitude = 0.05;
-		data->alpha = M_PI / 6;
-		data->translation_y = 0;
-		data->translation_x = 0;
+	data->scale = 0;
+	data->altitude = 0.05;
+	data->alpha = M_PI / 6;
+	data->translation_y = 0;
+	data->translation_x = 0;
 }
 
 void	redraw(t_data *data)

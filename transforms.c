@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:09:46 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/05 23:26:22 by aramos           ###   ########.fr       */
+/*   Updated: 2025/05/05 23:36:58 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static void	calculate_scale_and_offset(t_data *data, t_bounds *bounds)
 	center_x = (bounds->min_x + bounds->max_x) / 2.0;
 	center_y = (bounds->min_y + bounds->max_y) / 2.0;
 	data->center_x = WIDTH / 2.0 - center_x * data->scale + data->translation_x;
-	data->center_y = HEIGHT / 2.0 - center_y * data->scale + data->translation_y;
+	data->center_y = \
+		HEIGHT / 2.0 - center_y * data->scale + data->translation_y;
 }
 
 static void	apply_transform(t_data *data)
