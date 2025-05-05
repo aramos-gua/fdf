@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:42:40 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/02 13:27:41 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/05 23:30:56 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,22 @@ int	handle_input(int keysym, t_data *data)
 	else if (keysym == XK_Down)
 		data->scale /= M_PI;
 	else if (keysym == XK_w)
-		data->altitude /= 0.5;
+		data->translation_y -= 10;
 	else if (keysym == XK_s)
-		data->altitude *= 0.5;
-	mlx_destroy_image(data->mlx, data->img);
-	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	data->addr = mlx_get_data_addr(data->img, &data->bpp,
-			&data->line_length, &data->endian);
-	transforms(data);
-	grid_maker(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+		data->translation_y += 10;
+	else if (keysym == XK_a)
+		data->translation_x -= 10;
+	else if (keysym == XK_d)
+		data->translation_x += 10;
+	else if (keysym == XK_u)
+		data->altitude *= 3;
+	else if (keysym == XK_j)
+		data->altitude /= 3;
+	else if (keysym == XK_r)
+		reset(data);
+	else if (keysym == XK_p)
+		data->is_flat = !data->is_flat;
+	redraw(data);
 	return (0);
 }
 
@@ -56,16 +62,15 @@ void	grid_maker(t_data *data)
 
 void	data_init(t_data *data, char **argv)
 {
+	reset(data);
 	data->y = 0;
 	data->x = 0;
 	data->fd = -1;
 	data->map_w = 0;
 	data->map_h = 0;
+	data->is_flat = 0;
 	data->corners = NULL;
-	data->altitude = 0.05;
 	data->vertices = NULL;
-	data->translation = 1;
-	data->alpha = M_PI / 6;
 	data->final_tab = NULL;
 	data->map_path = argv[1];
 }

@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/02 13:13:03 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/05 23:26:54 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ typedef struct s_mlx_data
 	//settings for map
 	int			scale_base;//size of squares in grid
 	int			scale;//modifiable scale
-	int			translation;//scroll-info
+	int			translation_y;//scroll-info
+	int			translation_x;//scroll-info
 	float		altitude;//change in z
 	float		zoom;//zoom value
 	float		alpha;//rotation angle
@@ -89,6 +90,7 @@ typedef struct s_mlx_data
 	float		center_y;
 	float		scale_fax;
 	float		scale_fay;
+	int			is_flat;//flag to change projections
 	//color gradients
 	int			min_z;
 	int			max_z;
@@ -140,4 +142,7 @@ int		handle_exit(t_data *data);
 int		interpolate_color(int color1, int color2, float t);
 void	update_coordenates(t_line *line, t_line_vars *vars);
 void	compute_vertex_colors(t_data *data);
+void	reset(t_data *data);
+void	redraw(t_data *data);
+void	is_flat(t_data *data, float x, float y, float z);
 #endif

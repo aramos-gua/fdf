@@ -42,7 +42,8 @@ SRC = ./fdf.c\
 	  ./grid_maker_helpers.c\
 	  ./transforms.c\
 	  ./colors.c\
-	  ./freexit.c
+	  ./freexit.c\
+	  ./bonus.c
 
 OBJ = $(SRC:.c=.o)
 
