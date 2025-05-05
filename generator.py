@@ -2,7 +2,7 @@ from PIL import Image
 
 def convert_image_to_fdf(image_path, output_path):
     img = Image.open(image_path).convert("L")  # Grayscale
-    img = img.resize((100, 100))  # Resize to something manageable
+    img = img.resize((200, 200))  # Resize to something manageable
     pixels = list(img.getdata())
     width, height = img.size
 
@@ -11,4 +11,4 @@ def convert_image_to_fdf(image_path, output_path):
             row = pixels[y*width:(y+1)*width]
             f.write(' '.join(str(p // 10) for p in row) + '\n')  # Scale z-values down
 
-convert_image_to_fdf("/home/aramos/Pictures/bubbles.jpeg", "/home/aramos/fdf/test_maps/bubbles.fdf")
+convert_image_to_fdf("/home/aramos/Pictures/kali3.jpg", "/home/aramos/fdf/test_maps/kali3.fdf")

@@ -16,20 +16,21 @@ int	handle_input(int keysym, t_data *data)
 {
 	if (keysym == XK_Escape)
 		handle_exit(data);
-	else if (keysym == XK_Down || keysym == XK_Up)
-	{
-		if (keysym == XK_Down)
-			data->scale -= 5;
-		else
-			data->scale += 5;
-		mlx_destroy_image(data->mlx, data->img);
-		data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-		data->addr = mlx_get_data_addr(data->img, &data->bpp,
-				&data->line_length, &data->endian);
-		transforms(data);
-		grid_maker(data);
-		mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-	}
+	else if (keysym == XK_Up)
+		data->scale *= M_PI;
+	else if (keysym == XK_Down)
+		data->scale /= M_PI;
+	else if (keysym == XK_w)
+		data->altitude /= 0.5;
+	else if (keysym == XK_s)
+		data->altitude *= 0.5;
+	mlx_destroy_image(data->mlx, data->img);
+	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	data->addr = mlx_get_data_addr(data->img, &data->bpp,
+			&data->line_length, &data->endian);
+	transforms(data);
+	grid_maker(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (0);
 }
 
