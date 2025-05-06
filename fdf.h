@@ -23,12 +23,12 @@
 # include "libft/libft.h"
 # include <X11/keysym.h>
 # include <stdlib.h>
-# include <float.h>
 # include <stdio.h>
+# include <float.h>
 # include <fcntl.h>
 # include <math.h>
 
-typedef struct	s_vertx
+typedef struct s_vertx
 {
 	int			x;	
 	int			y;	
@@ -36,7 +36,7 @@ typedef struct	s_vertx
 	int			color;
 }	t_vertx;
 
-typedef struct	s_corners
+typedef struct s_corners
 {
 	float		x;
 	float		y;
@@ -96,13 +96,13 @@ typedef struct s_mlx_data
 	int			max_z;
 }	t_data;
 
-typedef struct	s_line
+typedef struct s_line
 {
 	t_vertx	a;
 	t_vertx	b;
 }	t_line;
 
-typedef struct	s_line_vars
+typedef struct s_line_vars
 {
 	int		dx;
 	int		dy;
@@ -112,7 +112,7 @@ typedef struct	s_line_vars
 	float	t;
 }	t_line_vars;
 
-typedef struct	s_bounds
+typedef struct s_bounds
 {
 	float	min_x;
 	float	min_y;

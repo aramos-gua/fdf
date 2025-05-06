@@ -58,7 +58,7 @@ $(LIBFT):
 
 # Compile .c files into .o files
 %.o: %.c
-	@echo "\n${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}"
+	@echo "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}"
 	@$(CC) $(CFLAGS) -I/usr/include -Imlx -c $< -o $@
 
 # Build all
