@@ -16,6 +16,12 @@
 #  define HEIGHT 1080
 #  ifndef WIDTH
 #   define WIDTH 1920
+#   ifndef FLT_MAX
+#    define FLT_MAX 3.402823466e+38F
+#    ifndef FLT_MIN
+#     define FLT_MIN 1.175494351e-38F
+#    endif
+#   endif
 #  endif
 # endif
 
@@ -23,8 +29,6 @@
 # include "libft/libft.h"
 # include <X11/keysym.h>
 # include <stdlib.h>
-# include <stdio.h>
-# include <float.h>
 # include <fcntl.h>
 # include <math.h>
 
