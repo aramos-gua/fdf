@@ -24,44 +24,47 @@ DARK_YELLOW =	\033[38;5;143m
 
 #Compiler information
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -MMD -MP -g3
-LDFLAGS = -Lminilibx-linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
+CFLAGS = -Wall -Werror -Wextra -Iincludes -Ilibft -Iminilibx-linux -MMD -MP -g3
 
-# Directories of other dependencies
-LIBFTDIR = ./libft
-MLXDIR = ./minilibx-linux
+# Libraries
+LIBFT_DIR = ./libft
+LIBFT = $(LIBFT_DIR)/libft.a
+MLX_DIR = minilibx-linux
+MLX_LIB = $(MLX_DIR)/libmlx.a
+MLX = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 
 # Target names
 NAME = fdf
-LIBFT = $(LIBFTDIR)/libft.a
+
+# Paths
 OBJ_DIR = build
+SRC_DIR = src
+INCLUDES = includes
 
-# Files
-SRC = ./fdf.c\
-	  ./validate_input.c\
-	  ./draw_tools.c\
-	  ./grid_maker_helpers.c\
-	  ./transforms.c\
-	  ./colors.c\
-	  ./freexit.c\
-	  ./bonus.c
+# Source Files
+SRC = $(wildcard $(SRC_DIR)/*.c)
 
-OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
+# Object and Dependency Files
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+DEP = $(OBJ:.o=.d)
 
 # Create program
-$(NAME): $(OBJ) $(LIBFT)
-	@make --no-print-directory -C $(MLXDIR)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(LDFLAGS) -o $(NAME)
-	@echo "\n${GREEN} Created ${NAME} ${DEF_COLOR}\n"
+$(NAME): $(OBJ) $(LIBFT) $(MLX_LIB)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) -o $@
+	@echo "\n${GREEN} Created $(NAME) ${DEF_COLOR}\n"
 
+# Create Libraries
 $(LIBFT):
-	@make --no-print-directory -C $(LIBFTDIR)
+	@make --no-print-directory -C $(LIBFT_DIR)
+
+$(MLX_LIB):
+	@make --no-print-directory -C $(MLX_DIR)
 
 # Compile .c files into .o files
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@echo "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}"
-	@$(CC) $(CFLAGS) -I/usr/include -Imlx -c $< -o $@
+	@$(CC) $(CFLAGS) -I/usr/include -I$(MLX_DIR)mlx -c $< -o $@
 
 # Build all
 all: $(NAME)
@@ -69,13 +72,13 @@ all: $(NAME)
 # Remove .o files
 clean:
 	@rm -rf $(OBJ_DIR)
-	@make --no-print-directory -C $(LIBFTDIR) clean
+	@make --no-print-directory -C $(LIBFT_DIR) clean
+	@make --no-print-directory -C $(MLX_DIR) clean
 
 # Remove everything
 fclean: clean
 	@rm -f $(NAME)
-	@make --no-print-directory -C $(LIBFTDIR) fclean
-	@make --no-print-directory -C $(MLXDIR) clean
+	@make --no-print-directory -C $(LIBFT_DIR) fclean
 	@echo "${GREEN} Cleaned $(NAME) ${DEF_COLOR}"
 
 # Rebuild everything
