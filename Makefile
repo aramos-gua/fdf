@@ -83,4 +83,4 @@ re: fclean all
 
 .PHONY: all clean fclean re
 
--include $((OBJ_DIR)/,$(OBJ:.o=.d))
+-include $(OBJ:.o=.d)
