@@ -24,7 +24,7 @@ DARK_YELLOW =	\033[38;5;143m
 
 #Compiler information
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -MMD -MP
+CFLAGS = -Wall -Werror -Wextra -MMD -MP -g3
 LDFLAGS = -Lminilibx-linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 
 # Directories of other dependencies
