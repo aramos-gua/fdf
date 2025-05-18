@@ -25,7 +25,7 @@
 #  endif
 # endif
 
-# include "mlx_linux/mlx.h"
+# include "minilibx-linux/mlx.h"
 # include "libft/libft.h"
 # include <X11/keysym.h>
 # include <stdlib.h>

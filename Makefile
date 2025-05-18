@@ -25,15 +25,16 @@ DARK_YELLOW =	\033[38;5;143m
 #Compiler information
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
-LDFLAGS = -Lmlx_linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
+LDFLAGS = -Lminilibx-linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 
 # Directories of other dependencies
 LIBFTDIR = ./libft
-MLXDIR = ./mlx_linux
+MLXDIR = ./minilibx-linux
 
 # Target names
 NAME = fdf
 LIBFT = $(LIBFTDIR)/libft.a
+OBJ_DIR = build
 
 # Files
 SRC = ./fdf.c\
@@ -45,7 +46,7 @@ SRC = ./fdf.c\
 	  ./freexit.c\
 	  ./bonus.c
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
 # Create program
 $(NAME): $(OBJ) $(LIBFT)
@@ -57,7 +58,8 @@ $(LIBFT):
 	@make --no-print-directory -C $(LIBFTDIR)
 
 # Compile .c files into .o files
-%.o: %.c
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
 	@echo "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}"
 	@$(CC) $(CFLAGS) -I/usr/include -Imlx -c $< -o $@
 
@@ -66,7 +68,7 @@ all: $(NAME)
 
 # Remove .o files
 clean:
-	@rm -f $(OBJ) $(OBJ:.o=.d)
+	@rm -rf $(OBJ_DIR)
 	@make --no-print-directory -C $(LIBFTDIR) clean
 
 # Remove everything
@@ -81,4 +83,4 @@ re: fclean all
 
 .PHONY: all clean fclean re
 
--include $(OBJ:.o=.d)
+-include $((OBJ_DIR)/,$(OBJ:.o=.d))
