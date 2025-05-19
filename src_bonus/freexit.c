@@ -6,11 +6,11 @@
 /*   By: Alejandro Ramos <alejandro.ramos.gua@gmai  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:19:40 by Alejandro Ram     #+#    #+#             */
-/*   Updated: 2025/05/19 18:12:45 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/02 13:36:46 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 void	found_error(char *message)
 {

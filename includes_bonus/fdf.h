@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/19 18:31:59 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/05 23:26:54 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_corners
 	float		y;
 }	t_corners;
 
-typedef struct s_mlx_data
+typedef struct s_data
 {
 	//info for MiniLibX
 	void		*mlx;//connection pointer
@@ -77,20 +77,27 @@ typedef struct s_mlx_data
 	int			col;//current column in 2D
 	int			row;//current row in 2D
 	//settings for map
+	int			scale_base;//size of squares in grid
 	int			scale;//modifiable scale
+	int			translation_y;//scroll-info
+	int			translation_x;//scroll-info
 	float		altitude;//change in z
+	float		zoom;//zoom value
 	float		alpha;//rotation angle
 	//3D build-up
 	t_vertx		*vertices;//vertices
 	t_corners	*corners;//vertices converted to 2D
-	float		iso_x;
-	float		iso_y;
+	float		iso_x;//x after prokection
+	float		iso_y;//y after projection
 	//transforms
 	float		center_x;
 	float		center_y;
 	float		scale_fax;
 	float		scale_fay;
-	int			is_flat;
+	int			is_flat;//flag to change projections
+	float		rotation_x;
+	float		rotation_y;
+	float		rotation_z;
 	//color gradients
 	int			min_z;
 	int			max_z;
@@ -115,8 +122,8 @@ typedef struct s_line_vars
 typedef struct s_bounds
 {
 	float	min_x;
-	float	max_x;
 	float	min_y;
+	float	max_x;
 	float	max_y;
 }	t_bounds;
 
@@ -126,16 +133,13 @@ void	validate_input(t_data *data, char *filename);
 int		map_info(t_data *data, char *line);
 void	map_parsing(t_data *data);
 void	vertices(t_data *data);
-void	ver_corn(t_data *data);
+void	data_init(t_data *data, char **argv);
 void	grid_maker(t_data *data);
 void	draw_right(t_data *data);
 void	ft_put_pixel(t_data *data, int x, int y, int color);
 void	draw_down(t_data *data);
 void	ft_draw_line(t_data *data, t_line line);
-void	is_flat(t_data *data, float x, float y, float z);
 void	draw_line_init(t_line *line, t_line_vars *vars);
-void	draw_right(t_data *data);
-void	draw_down(t_data *data);
 int		ft_loop(t_data *data);
 int		handle_input(int keysym, t_data *data);
 void	transforms(t_data *data);
@@ -145,4 +149,8 @@ int		handle_exit(t_data *data);
 int		interpolate_color(int color1, int color2, float t);
 void	update_coordenates(t_line *line, t_line_vars *vars);
 void	compute_vertex_colors(t_data *data);
+void	reset(t_data *data);
+void	redraw(t_data *data);
+void	is_flat(t_data *data, float x, float y, float z);
+void	rotate_image(float *x, float *y, float *z, t_data *data);
 #endif

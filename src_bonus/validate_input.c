@@ -6,11 +6,11 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:51:56 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/02 09:02:59 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/02 13:25:46 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 void	validate_input(t_data *data, char *filename)
 {

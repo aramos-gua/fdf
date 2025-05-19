@@ -6,18 +6,18 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:09:46 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/19 18:30:53 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/05 23:36:58 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 static void	init_bounds(t_bounds *bounds)
 {
 	bounds->min_x = FLT_MAX;
 	bounds->max_x = -FLT_MAX;
-	bounds->min_y = FLT_MAX;
-	bounds->max_y = -FLT_MAX;
+	bounds->min_x = FLT_MAX;
+	bounds->max_x = -FLT_MAX;
 }
 
 static void	compute_bounds(t_data *data, t_bounds *bounds)
@@ -48,21 +48,23 @@ static void	compute_bounds(t_data *data, t_bounds *bounds)
 
 static void	calculate_scale_and_offset(t_data *data, t_bounds *bounds)
 {
-	float	projected_w;
-	float	projected_h;
+	float	proj_w;
+	float	proj_h;
 	float	center_x;
 	float	center_y;
 
 	if (data->scale == 0.0)
 	{
-		projected_w = bounds->max_x - bounds->min_x;
-		projected_h = bounds->max_y - bounds->min_y;
-		data->scale = fmin(HEIGHT / projected_h, WIDTH / projected_w) * 0.5;
+		proj_w = bounds->max_x - bounds->min_x;
+		proj_h = bounds->max_y - bounds->min_y;
+		data->scale_base = fmin(HEIGHT / proj_h, WIDTH / proj_w) * 0.8;
+		data->scale = data->scale_base;
 	}
 	center_x = (bounds->min_x + bounds->max_x) / 2.0;
 	center_y = (bounds->min_y + bounds->max_y) / 2.0;
-	data->center_x = WIDTH / 2.0 - center_x * data->scale;
-	data->center_y = HEIGHT / 2.0 - center_y * data->scale;
+	data->center_x = WIDTH / 2.0 - center_x * data->scale + data->translation_x;
+	data->center_y = \
+		HEIGHT / 2.0 - center_y * data->scale + data->translation_y;
 }
 
 static void	apply_transform(t_data *data)
@@ -78,6 +80,7 @@ static void	apply_transform(t_data *data)
 		x = data->vertices[i].x;
 		y = data->vertices[i].y;
 		z = data->vertices[i].z * data->altitude;
+		rotate_image(&x, &y, &z, data);
 		is_flat(data, x, y, z);
 		data->corners[i].x = data->iso_x * data->scale + data->center_x;
 		data->corners[i].y = data->iso_y * data->scale + data->center_y;

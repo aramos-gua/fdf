@@ -42,7 +42,13 @@ SRC_DIR = src
 INCLUDES = includes
 
 # Source Files
-SRC = $(wildcard $(SRC_DIR)/*.c)
+SRC = $(SRC_DIR)/fdf.c\
+	  $(SRC_DIR)/validate_input.c\
+	  $(SRC_DIR)/draw_tools.c\
+	  $(SRC_DIR)/grid_maker_helpers.c\
+	  $(SRC_DIR)/transforms.c\
+	  $(SRC_DIR)/colors.c\
+	  $(SRC_DIR)/freexit.c
 
 # Object and Dependency Files
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

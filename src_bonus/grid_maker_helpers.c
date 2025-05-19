@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Alejandro Ramos <alejandro.ramos.gua@gmai  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 18:01:19 by Alejandro Ram     #+#    #+#             */
-/*   Updated: 2025/05/19 18:02:29 by Alejandro Ram    ###   ########.fr       */
+/*   Created: 2025/05/02 11:12:05 by Alejandro Ram     #+#    #+#             */
+/*   Updated: 2025/05/02 11:13:24 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 void	draw_right(t_data *data)
 {

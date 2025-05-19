@@ -6,16 +6,45 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:42:40 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/19 18:29:30 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/05 23:30:56 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 int	handle_input(int keysym, t_data *data)
 {
 	if (keysym == XK_Escape)
 		handle_exit(data);
+	else if (keysym == XK_Up)
+		data->scale *= M_PI;
+	else if (keysym == XK_Down)
+		data->scale /= M_PI;
+	else if (keysym == XK_w)
+		data->translation_y -= 10;
+	else if (keysym == XK_s)
+		data->translation_y += 10;
+	else if (keysym == XK_a)
+		data->translation_x -= 10;
+	else if (keysym == XK_d)
+		data->translation_x += 10;
+	else if (keysym == XK_u)
+		data->altitude *= 3;
+	else if (keysym == XK_j)
+		data->altitude /= 3;
+	else if (keysym == XK_r)
+		reset(data);
+	else if (keysym == XK_p)
+		data->is_flat = !data->is_flat;
+	else if (keysym == XK_z)
+		data->rotation_x += 0.5;
+	else if (keysym == XK_x)
+		data->rotation_x -= 0.5;
+	else if (keysym == XK_c)
+		data->rotation_y += 0.5;
+	else if (keysym == XK_v)
+		data->rotation_y -= 0.5;
+	redraw(data);
 	return (0);
 }
 
@@ -41,6 +70,7 @@ void	grid_maker(t_data *data)
 
 void	data_init(t_data *data, char **argv)
 {
+	reset(data);
 	data->y = 0;
 	data->x = 0;
 	data->fd = -1;
@@ -48,11 +78,12 @@ void	data_init(t_data *data, char **argv)
 	data->map_h = 0;
 	data->is_flat = 0;
 	data->corners = NULL;
-	data->altitude = 0.08;
 	data->vertices = NULL;
-	data->alpha = M_PI / 4;
 	data->final_tab = NULL;
 	data->map_path = argv[1];
+	data->rotation_x = 0.0f;
+	data->rotation_y = 0.0f;
+	data->rotation_z = 0.0f;
 }
 
 int	win_init(t_data *data)
@@ -77,7 +108,7 @@ int	win_init(t_data *data)
 	grid_maker(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	mlx_key_hook(data->win, &handle_input, data);
-	mlx_hook(data, 10, 0, handle_exit, data);
+	mlx_hook(data->win, 17, 0, handle_exit, data);
 	return (0);
 }
 

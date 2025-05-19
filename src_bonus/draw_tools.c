@@ -6,11 +6,11 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 20:56:54 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/19 18:33:30 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/05 23:12:04 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 void	ft_put_pixel(t_data *data, int x, int y, int color)
 {
@@ -33,7 +33,7 @@ void	ft_draw_line(t_data *data, t_line line)
 			vars.t = (float)vars.step / (float)vars.dx;
 		else
 			vars.t = (float)vars.step / (float)(-vars.dy);
-		ft_put_pixel(data, line.a.x, line.a.y, \
+		ft_put_pixel(data, line.a.x, line.a.y,
 			interpolate_color(line.a.color, line.b.color, vars.t));
 		if (line.a.x == line.b.x && line.a.y == line.b.y)
 			break ;
@@ -69,18 +69,4 @@ void	draw_line_init(t_line *line, t_line_vars *vars)
 	vars->dy = -abs(line->b.y - line->a.y);
 	vars->err = vars->dx + vars->dy;
 	vars->step = 0;
-}
-
-void	is_flat(t_data *data, float x, float y, float z)
-{
-	if (data->is_flat)
-	{
-		data->iso_x = x;
-		data->iso_y = y;
-	}
-	else
-	{
-		data->iso_x = (x - y) * cos(data->alpha);
-		data->iso_y = (x + y) * sin(data->alpha) - z;
-	}
 }
