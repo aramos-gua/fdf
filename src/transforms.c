@@ -80,6 +80,7 @@ static void	apply_transform(t_data *data)
 		x = data->vertices[i].x;
 		y = data->vertices[i].y;
 		z = data->vertices[i].z * data->altitude;
+		rotate_image(&x, &y, &z, data);
 		is_flat(data, x, y, z);
 		data->corners[i].x = data->iso_x * data->scale + data->center_x;
 		data->corners[i].y = data->iso_y * data->scale + data->center_y;

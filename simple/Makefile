@@ -40,6 +40,7 @@ SRC = ./fdf.c\
 	  ./validate_input.c\
 	  ./draw_tools.c\
 	  ./transforms.c\
+	  ./grid_maker_helpers.c\
 	  ./colors.c\
 	  ./freexit.c
 

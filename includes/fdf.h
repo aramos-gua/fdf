@@ -46,7 +46,7 @@ typedef struct s_corners
 	float		y;
 }	t_corners;
 
-typedef struct s_mlx_data
+typedef struct s_data
 {
 	//info for MiniLibX
 	void		*mlx;//connection pointer
@@ -95,6 +95,9 @@ typedef struct s_mlx_data
 	float		scale_fax;
 	float		scale_fay;
 	int			is_flat;//flag to change projections
+	float		rotation_x;
+	float		rotation_y;
+	float		rotation_z;
 	//color gradients
 	int			min_z;
 	int			max_z;
@@ -149,4 +152,5 @@ void	compute_vertex_colors(t_data *data);
 void	reset(t_data *data);
 void	redraw(t_data *data);
 void	is_flat(t_data *data, float x, float y, float z);
+void	rotate_image(float *x, float *y, float *z, t_data *data);
 #endif

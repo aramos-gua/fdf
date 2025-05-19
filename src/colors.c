@@ -51,23 +51,17 @@ int	interpolate_color(int c1, int c2, float t)
 	int	b;
 
 	r = ((1 - t) * ((c1 >> 16) & 0xFF)) + (t * ((c2 >> 16) & 0xFF));
-	g = ((1 - t) * ((c1 >> 8) & 0x44)) + (t * ((c2 >> 8) & 0x44));
-	b = ((1 - t) * (c1 & 0xDD)) + (t * (c2 & 0xDD));
+	g = ((1 - t) * ((c1 >> 8) & 0xFF)) + (t * ((c2 >> 8) & 0xFF));
+	b = ((1 - t) * (c1 & 0xFF)) + (t * (c2 & 0xFF));
 	return ((r << 16) | (g << 8) | b);
 }
 
 int	get_z_color(int z, t_data *data)
 {
 	float	t;
-	int		r;
-	int		g;
-	int		b;
 
-	t = (float)(z - data->min_z) / (data->max_z - data->min_z);
 	if (data->max_z == data->min_z)
 		return (0xFFFFFF);
-	r = (int)(t * 255);
-	g = (int)(128 + t * 127);
-	b = (int)((1.0f - t) * 255);
-	return ((r << 16) | (g << 8) | b);
+	t = (float)(z - data->min_z) / (data->max_z - data->min_z);
+	return (interpolate_color(0xFFFFFFFF, 0xFF2D00, t));
 }

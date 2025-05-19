@@ -22,6 +22,27 @@ void	ft_put_pixel(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+void	ft_draw_line(t_data *data, t_line line)
+{
+	t_line_vars	vars;
+
+	draw_line_init(&line, &vars);
+	while (1)
+	{
+		if (vars.dx > -vars.dy)
+			vars.t = (float)vars.step / (float)vars.dx;
+		else
+			vars.t = (float)vars.step / (float)(-vars.dy);
+		ft_put_pixel(data, line.a.x, line.a.y,
+			interpolate_color(line.a.color, line.b.color, vars.t));
+		if (line.a.x == line.b.x && line.a.y == line.b.y)
+			break ;
+		vars.e2 = 2 * vars.err;
+		update_coordenates(&line, &vars);
+		vars.step++;
+	}
+}
+
 void	update_coordenates(t_line *line, t_line_vars *vars)
 {
 	if (vars->e2 >= vars->dy)
@@ -48,25 +69,4 @@ void	draw_line_init(t_line *line, t_line_vars *vars)
 	vars->dy = -abs(line->b.y - line->a.y);
 	vars->err = vars->dx + vars->dy;
 	vars->step = 0;
-}
-
-void	ft_draw_line(t_data *data, t_line line)
-{
-	t_line_vars	vars;
-
-	draw_line_init(&line, &vars);
-	while (1)
-	{
-		if (vars.dx > -vars.dy)
-			vars.t = (float)vars.step / (float)vars.dx;
-		else
-			vars.t = (float)vars.step / (float)(-vars.dy);
-		ft_put_pixel(data, line.a.x, line.a.y,
-			interpolate_color(line.a.color, line.b.color, vars.t));
-		if (line.a.x == line.b.x && line.a.y == line.b.y)
-			break ;
-		vars.e2 = 2 * vars.err;
-		update_coordenates(&line, &vars);
-		vars.step++;
-	}
 }

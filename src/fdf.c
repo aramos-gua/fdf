@@ -36,6 +36,14 @@ int	handle_input(int keysym, t_data *data)
 		reset(data);
 	else if (keysym == XK_p)
 		data->is_flat = !data->is_flat;
+	else if (keysym == XK_z)
+		data->rotation_x += 0.5;
+	else if (keysym == XK_x)
+		data->rotation_x -= 0.5;
+	else if (keysym == XK_c)
+		data->rotation_y += 0.5;
+	else if (keysym == XK_v)
+		data->rotation_y -= 0.5;
 	redraw(data);
 	return (0);
 }
@@ -73,6 +81,9 @@ void	data_init(t_data *data, char **argv)
 	data->vertices = NULL;
 	data->final_tab = NULL;
 	data->map_path = argv[1];
+	data->rotation_x = 0.0f;
+	data->rotation_y = 0.0f;
+	data->rotation_z = 0.0f;
 }
 
 int	win_init(t_data *data)

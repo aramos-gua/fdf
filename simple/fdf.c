@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:42:40 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/19 16:17:31 by alex             ###   ########.fr       */
+/*   Updated: 2025/05/19 18:29:30 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,6 @@ int	handle_input(int keysym, t_data *data)
 	if (keysym == XK_Escape)
 		handle_exit(data);
 	return (0);
-}
-
-void	ft_draw_line(t_data *data, t_line line)
-{
-	t_line_vars	vars;
-
-	draw_line_init(&line, &vars);
-	while (1)
-	{
-		if (vars.dx > -vars.dy)
-			vars.t = (float)vars.step / (float)vars.dx;
-		else
-			vars.t = (float)vars.step / (float)(-vars.dy);
-		ft_put_pixel(data, line.a.x, line.a.y, interpolate_color(line.a.color, line.b.color, vars.t));
-		if (line.a.x == line.b.x && line.a.y == line.b.y)
-			break ;
-		vars.e2 = 2 * vars.err;
-		update_coordenates(&line, &vars);
-		vars.step++;
-	}
 }
 
 void	grid_maker(t_data *data)
@@ -59,12 +39,6 @@ void	grid_maker(t_data *data)
 	}
 }
 
-void	found_error(char *message)
-{
-	ft_printf("%s\n", message);
-	exit (1);
-}
-
 void	data_init(t_data *data, char **argv)
 {
 	data->y = 0;
@@ -72,11 +46,11 @@ void	data_init(t_data *data, char **argv)
 	data->fd = -1;
 	data->map_w = 0;
 	data->map_h = 0;
+  data->is_flat = 0;
 	data->corners = NULL;
-	data->altitude = 0.3;
+	data->altitude = 0.08;
 	data->vertices = NULL;
-	data->translation = 1;
-	data->alpha = M_PI / 6;
+	data->alpha = M_PI / 4;
 	data->final_tab = NULL;
 	data->map_path = argv[1];
 }
@@ -96,7 +70,7 @@ int	win_init(t_data *data)
 			&data->line_length, &data->endian);
 	if (!data->addr)
 		return (-1);
-	if (data->map_h == 0 || data->map_w ==0)
+	if (data->map_h == 0 || data->map_w == 0)
 		found_error("Error: Invalid Map Dimensions");
 	data->scale = 0.0;
 	transforms(data);
@@ -120,9 +94,6 @@ int	main(int argc, char **argv)
 	compute_z_bounds(&data);
 	if (win_init(&data) != 0)
 		found_error("Error/MiniLibX: Render Error");
-	for (int i = 0; i < data.map_h; i++)
-		free(data.final_tab[i++]);
-	free(data.final_tab);
 	mlx_loop(data.mlx);
 	return (0);
 }

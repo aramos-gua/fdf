@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:35:35 by aramos            #+#    #+#             */
-/*   Updated: 2025/05/02 10:57:12 by Alejandro Ram    ###   ########.fr       */
+/*   Updated: 2025/05/19 18:27:15 by Alejandro Ram    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,20 @@ typedef struct s_mlx_data
 	int			col;//current column in 2D
 	int			row;//current row in 2D
 	//settings for map
-	int			scale_base;//size of squares in grid
 	int			scale;//modifiable scale
-	int			translation;//scroll-info
 	float		altitude;//change in z
-	float		zoom;//zoom value
 	float		alpha;//rotation angle
 	//3D build-up
 	t_vertx		*vertices;//vertices
 	t_corners	*corners;//vertices converted to 2D
+	float		iso_x;
+	float		iso_y;
 	//transforms
 	float		center_x;
 	float		center_y;
 	float		scale_fax;
 	float		scale_fay;
+	int			is_flat;
 	//color gradients
 	int			min_z;
 	int			max_z;
@@ -100,6 +100,14 @@ typedef struct	s_line_vars
 	int		step;
 	float	t;
 }	t_line_vars;
+
+typedef struct s_bounds
+{
+	float	min_x;
+	float	max_x;
+	float	min_y;
+	float	max_y;
+}	t_bounds;
 
 //Parse input
 void	found_error(char *message);

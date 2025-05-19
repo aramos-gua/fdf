@@ -41,7 +41,6 @@ int	map_info(t_data *data, char *line)
 		free(line);
 		line = get_next_line(data->fd);
 	}
-	ft_printf("map_w: %d\nmap_h: %d\n", data->map_w, data->map_h);
 	close(data->fd);
 	return (0);
 }

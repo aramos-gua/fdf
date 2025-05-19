@@ -19,6 +19,9 @@ void	reset(t_data *data)
 	data->alpha = M_PI / 6;
 	data->translation_y = 0;
 	data->translation_x = 0;
+	data->rotation_x = 0.0f;
+	data->rotation_y = 0.0f;
+	data->rotation_z = 0.0f;
 }
 
 void	redraw(t_data *data)
@@ -44,4 +47,26 @@ void	is_flat(t_data *data, float x, float y, float z)
 		data->iso_x = (x - y) * cos(data->alpha);
 		data->iso_y = (x + y) * sin(data->alpha) - z;
 	}
+}
+
+void	rotate_image(float *x, float *y, float *z, t_data *data)
+{
+	float tmp_x;
+	float tmp_y;
+	float tmp_z;
+
+	tmp_y = *y * cos(data->rotation_x) - *z * sin(data->rotation_x);
+	tmp_z = *y * sin(data->rotation_x) + *z * cos(data->rotation_x);
+	*y = tmp_y;
+	*z = tmp_z;
+
+	tmp_x = *x * cos(data->rotation_y) + *z * sin(data->rotation_y);
+	tmp_z = -(*x) * sin(data->rotation_y) + *z * cos(data->rotation_y);
+	*x = tmp_x;
+	*z = tmp_z;
+
+	tmp_x = *x * cos(data->rotation_z) - *y * sin(data->rotation_z);
+	tmp_y = *x * sin(data->rotation_z) + *y * cos(data->rotation_z);
+	*x = tmp_x;
+	*y = tmp_y;
 }
