@@ -38,8 +38,11 @@ NAME = fdf
 
 # Paths
 OBJ_DIR = build
+BOBJ_DIR = build
 SRC_DIR = src
+BONUS_DIR = src_bonus
 INCLUDES = includes
+BONUS_INCLUDES = includes_bonus
 
 # Source Files
 SRC = $(SRC_DIR)/fdf.c\
@@ -50,13 +53,31 @@ SRC = $(SRC_DIR)/fdf.c\
 	  $(SRC_DIR)/colors.c\
 	  $(SRC_DIR)/freexit.c
 
+BONUS_SRC = $(BONUS_DIR)/fdf_bonus.c\
+			$(BONUS_DIR)/validate_input_bonus.c\
+			$(BONUS_DIR)/draw_tools_bonus.c\
+			$(BONUS_DIR)/grid_maker_helpers_bonus.c\
+			$(BONUS_DIR)/transforms_bonus.c\
+			$(BONUS_DIR)/colors_bonus.c\
+			$(BONUS_DIR)/freexit_bonus.c\
+			$(BONUS_DIR)/bonus.c\
+			$(BONUS_DIR)/handle_input_bonus.c
+
+
 # Object and Dependency Files
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEP = $(OBJ:.o=.d)
 
+BOBJ = $(BONUS_SRC:$(BONUS_DIR)/%.c=$(OBJ_DIR)/%.o)
+DEP = $(BOBJ:.o=.d)
+
 # Create program
 $(NAME): $(OBJ) $(LIBFT) $(MLX_LIB)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) -o $@
+	@echo "\n${GREEN} Created $(NAME) ${DEF_COLOR}\n"
+
+$(BONUS): $(BOBJ) $(LIBFT) $(MLX_LIB)
+	@$(CC) $(CFLAGS) $(BOBJ) $(LIBFT) $(MLX) -o $@
 	@echo "\n${GREEN} Created $(NAME) ${DEF_COLOR}\n"
 
 # Create Libraries
@@ -74,6 +95,8 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 # Build all
 all: $(NAME)
+
+bonus: $(BONUS)
 
 # Remove .o files
 clean:

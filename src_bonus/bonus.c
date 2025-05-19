@@ -51,20 +51,18 @@ void	is_flat(t_data *data, float x, float y, float z)
 
 void	rotate_image(float *x, float *y, float *z, t_data *data)
 {
-	float tmp_x;
-	float tmp_y;
-	float tmp_z;
+	float	tmp_x;
+	float	tmp_y;
+	float	tmp_z;
 
 	tmp_y = *y * cos(data->rotation_x) - *z * sin(data->rotation_x);
 	tmp_z = *y * sin(data->rotation_x) + *z * cos(data->rotation_x);
 	*y = tmp_y;
 	*z = tmp_z;
-
 	tmp_x = *x * cos(data->rotation_y) + *z * sin(data->rotation_y);
 	tmp_z = -(*x) * sin(data->rotation_y) + *z * cos(data->rotation_y);
 	*x = tmp_x;
 	*z = tmp_z;
-
 	tmp_x = *x * cos(data->rotation_z) - *y * sin(data->rotation_z);
 	tmp_y = *x * sin(data->rotation_z) + *y * cos(data->rotation_z);
 	*x = tmp_x;
