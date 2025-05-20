@@ -35,6 +35,7 @@ MLX = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 
 # Target names
 NAME = fdf
+BONUS_NAME = fdf_bonus
 
 # Paths
 OBJ_DIR = build
@@ -96,21 +97,24 @@ $(BOBJ_DIR)/%.o: $(BONUS_DIR)/%.c
 all: $(NAME)
 
 # Build Bonus
+$(BONUS_NAME): $(BOBJ) $(LIBFT) $(MLX_LIB)
+	@$(CC) $(CFLAGS) $(BOBJ) $(LIBFT) $(MLX) -o $(BONUS_NAME)
+	@echo "\n${GREEN} Created Bonus $(BONUS_NAME) ${DEF_COLOR}\n"
+
 bonus: CFLAGS := -Wall -Werror -Wextra -Iincludes_bonus -Ilibft -Iminilibx-linux -MMD -MP -g3
-bonus: $(BOBJ) $(LIBFT) $(MLX_LIB)
-	@$(CC) $(CFLAGS) $(BOBJ) $(LIBFT) $(MLX) -o $(NAME)
-	@echo "\n${GREEN} Created Bonus $(NAME) ${DEF_COLOR}\n"
+bonus: $(BONUS_NAME)
+	@cp $(BONUS_NAME) $(NAME)
 
 # Remove .o files
 clean:
-	@rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR) $(BOBJ_DIR)
 	@make --no-print-directory -C $(LIBFT_DIR) clean
 	@make --no-print-directory -C $(MLX_DIR) clean
 	@echo "${GREEN} Cleaned $(OBJ_DIR) ${DEF_COLOR}"
 
 # Remove everything
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(NAME) $(BONUS_NAME)
 	@make --no-print-directory -C $(LIBFT_DIR) fclean
 	@echo "${GREEN} Cleaned $(NAME) ${DEF_COLOR}"
 
