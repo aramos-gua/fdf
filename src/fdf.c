@@ -48,9 +48,9 @@ void	data_init(t_data *data, char **argv)
 	data->map_h = 0;
 	data->is_flat = 0;
 	data->corners = NULL;
-	data->altitude = 0.08;
+	data->altitude = 0.27;
 	data->vertices = NULL;
-	data->alpha = M_PI / 4;
+	data->alpha = M_PI / 5;
 	data->final_tab = NULL;
 	data->map_path = argv[1];
 }

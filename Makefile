@@ -40,8 +40,6 @@ NAME = fdf
 OBJ_DIR = build
 SRC_DIR = src
 BONUS_DIR = src_bonus
-#INCLUDES = includes
-#BONUS_INCLUDES = includes_bonus
 
 # Source Files
 SRC = $(SRC_DIR)/fdf.c\
@@ -52,6 +50,7 @@ SRC = $(SRC_DIR)/fdf.c\
 	  $(SRC_DIR)/colors.c\
 	  $(SRC_DIR)/freexit.c
 
+# Bonus Source Files
 BONUS_SRC = $(BONUS_DIR)/fdf_bonus.c\
 			$(BONUS_DIR)/validate_input_bonus.c\
 			$(BONUS_DIR)/draw_tools_bonus.c\
@@ -63,12 +62,12 @@ BONUS_SRC = $(BONUS_DIR)/fdf_bonus.c\
 			$(BONUS_DIR)/handle_input_bonus.c
 
 
-# Object and Dependency Files
+# Objects and Dependency Files
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 BOBJ = $(BONUS_SRC:$(BONUS_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEP = $(OBJ:.o=.d) $(BOBJ:.o=.d)
 
-# Create program
+# Create Mandatory
 $(NAME): $(OBJ) $(LIBFT) $(MLX_LIB)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) -o $@
 	@echo "\n${GREEN} Created $(NAME) ${DEF_COLOR}\n"
@@ -80,12 +79,13 @@ $(LIBFT):
 $(MLX_LIB):
 	@make --no-print-directory -C $(MLX_DIR)
 
-# Compile .c files into .o files
+# Compile Mandatory .c files into .o files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@echo "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}"
 	@$(CC) $(CFLAGS) -I/usr/include -I$(MLX_DIR)mlx -c $< -o $@
 
+# Compile Bonus .c files into .o files
 $(OBJ_DIR)/%.o: $(BONUS_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@echo "${MAGENTA} ~ ${BROWN} Compiling Bonus... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}"
@@ -94,6 +94,7 @@ $(OBJ_DIR)/%.o: $(BONUS_DIR)/%.c
 # Build all
 all: $(NAME)
 
+# Build Bonus
 bonus: CFLAGS := -Wall -Werror -Wextra -Iincludes_bonus -Ilibft -Iminilibx-linux -MMD -MP -g3
 bonus: $(BOBJ) $(LIBFT) $(MLX_LIB)
 	@$(CC) $(CFLAGS) $(BOBJ) $(LIBFT) $(MLX) -o $(NAME)
@@ -104,6 +105,7 @@ clean:
 	@rm -rf $(OBJ_DIR)
 	@make --no-print-directory -C $(LIBFT_DIR) clean
 	@make --no-print-directory -C $(MLX_DIR) clean
+	@echo "${GREEN} Cleaned $(OBJ_DIR) ${DEF_COLOR}"
 
 # Remove everything
 fclean: clean
