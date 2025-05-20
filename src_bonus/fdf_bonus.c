@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include "../includes_bonus/fdf_bonus.h"
 
 void	grid_maker(t_data *data)
 {

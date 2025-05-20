@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include "../includes_bonus/fdf_bonus.h"
 
 void	draw_right(t_data *data)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include "../includes_bonus/fdf_bonus.h"
 
 void	compute_z_bounds(t_data *data)
 {

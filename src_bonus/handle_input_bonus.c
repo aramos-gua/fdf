@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes_bonus/fdf.h"
+#include "../includes_bonus/fdf_bonus.h"
 
 int	handle_input(int keysym, t_data *data)
 {

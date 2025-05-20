@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include "../includes_bonus/fdf_bonus.h"
 
 void	reset(t_data *data)
 {

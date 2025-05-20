@@ -38,11 +38,10 @@ NAME = fdf
 
 # Paths
 OBJ_DIR = build
-BOBJ_DIR = build
 SRC_DIR = src
 BONUS_DIR = src_bonus
-INCLUDES = includes
-BONUS_INCLUDES = includes_bonus
+#INCLUDES = includes
+#BONUS_INCLUDES = includes_bonus
 
 # Source Files
 SRC = $(SRC_DIR)/fdf.c\
@@ -66,18 +65,12 @@ BONUS_SRC = $(BONUS_DIR)/fdf_bonus.c\
 
 # Object and Dependency Files
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-DEP = $(OBJ:.o=.d)
-
 BOBJ = $(BONUS_SRC:$(BONUS_DIR)/%.c=$(OBJ_DIR)/%.o)
-DEP = $(BOBJ:.o=.d)
+DEP = $(OBJ:.o=.d) $(BOBJ:.o=.d)
 
 # Create program
 $(NAME): $(OBJ) $(LIBFT) $(MLX_LIB)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) -o $@
-	@echo "\n${GREEN} Created $(NAME) ${DEF_COLOR}\n"
-
-$(BONUS): $(BOBJ) $(LIBFT) $(MLX_LIB)
-	@$(CC) $(CFLAGS) $(BOBJ) $(LIBFT) $(MLX) -o $@
 	@echo "\n${GREEN} Created $(NAME) ${DEF_COLOR}\n"
 
 # Create Libraries
@@ -93,10 +86,18 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}"
 	@$(CC) $(CFLAGS) -I/usr/include -I$(MLX_DIR)mlx -c $< -o $@
 
+$(OBJ_DIR)/%.o: $(BONUS_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@echo "${MAGENTA} ~ ${BROWN} Compiling Bonus... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}"
+	@$(CC) $(CFLAGS) -I/usr/include -I$(MLX_DIR)mlx -c $< -o $@
+
 # Build all
 all: $(NAME)
 
-bonus: $(BONUS)
+bonus: CFLAGS := -Wall -Werror -Wextra -Iincludes_bonus -Ilibft -Iminilibx-linux -MMD -MP -g3
+bonus: $(BOBJ) $(LIBFT) $(MLX_LIB)
+	@$(CC) $(CFLAGS) $(BOBJ) $(LIBFT) $(MLX) -o $(NAME)
+	@echo "\n${GREEN} Created Bonus $(NAME) ${DEF_COLOR}\n"
 
 # Remove .o files
 clean:
