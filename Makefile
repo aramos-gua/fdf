@@ -38,6 +38,7 @@ NAME = fdf
 
 # Paths
 OBJ_DIR = build
+BOBJ_DIR = build_bonus
 SRC_DIR = src
 BONUS_DIR = src_bonus
 
@@ -64,7 +65,7 @@ BONUS_SRC = $(BONUS_DIR)/fdf_bonus.c\
 
 # Objects and Dependency Files
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-BOBJ = $(BONUS_SRC:$(BONUS_DIR)/%.c=$(OBJ_DIR)/%.o)
+BOBJ = $(BONUS_SRC:$(BONUS_DIR)/%.c=$(BOBJ_DIR)/%.o)
 DEP = $(OBJ:.o=.d) $(BOBJ:.o=.d)
 
 # Create Mandatory
@@ -86,7 +87,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) -I/usr/include -I$(MLX_DIR)mlx -c $< -o $@
 
 # Compile Bonus .c files into .o files
-$(OBJ_DIR)/%.o: $(BONUS_DIR)/%.c
+$(BOBJ_DIR)/%.o: $(BONUS_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@echo "${MAGENTA} ~ ${BROWN} Compiling Bonus... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}"
 	@$(CC) $(CFLAGS) -I/usr/include -I$(MLX_DIR)mlx -c $< -o $@
@@ -118,4 +119,4 @@ re: fclean all
 
 .PHONY: all clean fclean re
 
--include $(OBJ:.o=.d)
+-include $(OBJ:.o=.d) $(BOBJ:.o=.d)
